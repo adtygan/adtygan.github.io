@@ -1,0 +1,15 @@
+---
+aliases:
+- /fswatcb
+permalink: /fswatch
+badges: false
+toc: true
+categories:
+- File-Systems
+date: '2024-04-01'
+description: "Introduction to file tracking using `fswatch`"
+hide: false
+output-file: fswatch.html
+search_exclude: false
+title: 'Never Miss a New File with fswatch'
+---

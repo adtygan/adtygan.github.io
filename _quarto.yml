@@ -12,7 +12,7 @@ format:
 website:
   title: "Sayak Paul"
   site-url: "https://adtygan.github.io/"
-  description: "Personal site of Sayak Paul."
+  description: "Personal site of Aditya Ganesh Kumar."
   favicon: posts/favicon.ico
   search: false
   twitter-card:
@@ -28,21 +28,21 @@ website:
     left:
       - text: "About Me"
         href: pages/about.qmd
-      - text: "Authoring"
-        href: pages/authoring.qmd
-      - text: "Blog"
-        href: blog.qmd
-      - text: "Research"
-        href: pages/research.qmd
-      - text: "Resources"
-        href: pages/resources.qmd
+      #- text: "Authoring"
+      #  href: pages/authoring.qmd
+      #- text: "Blog"
+      #  href: blog.qmd
+      #- text: "Research"
+      #  href: pages/research.qmd
+      #- text: "Resources"
+      #  href: pages/resources.qmd
     right:
       - icon: twitter
-        href: https://twitter.com/RisingSayak
+        href: https://twitter.com/adtygan
       - icon: linkedin
-        href: https://www.linkedin.com/in/sayak-paul/
+        href: https://www.linkedin.com/in/adityaganeshkumar/
       - icon: github
-        href: https://github.com/sayakpaul
+        href: https://github.com/adtygan
 
 execute:
   freeze: auto
