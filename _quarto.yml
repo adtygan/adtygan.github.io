@@ -21,7 +21,7 @@ website:
   open-graph: true
   repo-actions: [edit, issue]
   repo-branch: "master"
-  repo-url: "https://github.com/adtygan.github.io"
+  repo-url: "https://github.com/adtygan/adtygan.github.io"
   #google-analytics: "UA-163448909-1"
   navbar:
     background: primary
