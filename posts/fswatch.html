@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2024-04-01">
-<meta name="description" content="Introduction to file tracking using fswatch">
+<meta name="description" content="Introduction to file change monitoring using fswatch">
 
 <title>Aditya Ganesh Kumar - Never Miss a New File with fswatch</title>
 <style>
@@ -61,7 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../posts/favicon.ico" rel="icon">
+<link href="../favicon.ico" rel="icon">
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -93,10 +93,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="Aditya Ganesh Kumar - Never Miss a New File with fswatch">
-<meta property="og:description" content="Introduction to file tracking using fswatch">
+<meta property="og:description" content="Introduction to file change monitoring using fswatch">
 <meta property="og:site_name" content="Aditya Ganesh Kumar">
 <meta name="twitter:title" content="Aditya Ganesh Kumar - Never Miss a New File with fswatch">
-<meta name="twitter:description" content="Introduction to file tracking using fswatch">
+<meta name="twitter:description" content="Introduction to file change monitoring using fswatch">
 <meta name="twitter:creator" content="@adtygan">
 <meta name="twitter:card" content="summary">
 </head>
@@ -118,8 +118,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../pages/about.html"> 
-<span class="menu-text">About Me</span></a>
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../blog.html"> 
@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <h1 class="title">Never Miss a New File with fswatch</h1>
                   <div>
         <div class="description">
-          Introduction to file tracking using <code>fswatch</code>
+          Introduction to file change monitoring using fswatch
         </div>
       </div>
                           <div class="quarto-categories">
@@ -194,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#running-as-background-process" id="toc-running-as-background-process" class="nav-link" data-scroll-target="#running-as-background-process">Running as Background Process</a></li>
   <li><a href="#closing-thoughts" id="toc-closing-thoughts" class="nav-link" data-scroll-target="#closing-thoughts">Closing Thoughts</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/adtygan/edit/master/posts/fswatch.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/adtygan/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/adtygan/adtygan.github.io/edit/master/posts/fswatch.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/adtygan/adtygan.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -203,6 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<p><img src="media/fswatch.png" class="img-fluid"></p>
 <section id="context" class="level2">
 <h2 class="anchored" data-anchor-id="context">Context</h2>
 <p>As someone with a new found interest in automating things, I have been working on building a local image search engine called <strong>WarpSearch</strong>. It will allow me to query locally stored images using text and this is amazing because I can dump all my images in one folder and be very hopeful that I will be able to find it later. But folders don’t remain the same. Images get added or deleted and I need to keep track of these changes.</p>
@@ -810,9 +811,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<script src="https://utteranc.es/client.js" repo="adtygan/adtygan.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
 </div> <!-- /content -->
 
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/adtygan/edit/master/posts/fswatch.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/adtygan/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/adtygan/adtygan.github.io/edit/master/posts/fswatch.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/adtygan/adtygan.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

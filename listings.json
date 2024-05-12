@@ -2,8 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
-      "/posts/fswatch.html",
-      "/posts/quarto-migration.html"
+      "/posts/fswatch.html"
     ]
   }
 ]
