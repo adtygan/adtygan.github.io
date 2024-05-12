@@ -10,7 +10,7 @@ format:
     toc: true
 
 website:
-  title: "Sayak Paul"
+  title: "Aditya Ganesh Kumar"
   site-url: "https://adtygan.github.io/"
   description: "Personal site of Aditya Ganesh Kumar."
   favicon: posts/favicon.ico
@@ -30,8 +30,8 @@ website:
         href: pages/about.qmd
       #- text: "Authoring"
       #  href: pages/authoring.qmd
-      #- text: "Blog"
-      #  href: blog.qmd
+      - text: "Blog"
+        href: blog.qmd
       #- text: "Research"
       #  href: pages/research.qmd
       #- text: "Resources"
