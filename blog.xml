@@ -6,14 +6,14 @@
       version="2.0">
 <channel>
 <title>Sayak Paul</title>
-<link>https://sayak.dev/blog.html</link>
-<atom:link href="https://sayak.dev/blog.xml" rel="self" type="application/rss+xml"/>
+<link>https://adtygan.github.io/blog.html</link>
+<atom:link href="https://adtygan.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Personal site of Sayak Paul.</description>
 <generator>quarto-1.4.554</generator>
 <lastBuildDate>Fri, 15 Mar 2024 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Streamlining PyPI Releases: A Case Study with 🧨 Diffusers</title>
-  <link>https://sayak.dev/posts/streamlined-releases.html</link>
+  <link>https://adtygan.github.io/posts/streamlined-releases.html</link>
   <description><![CDATA[ 
 
 
@@ -91,13 +91,13 @@ Pay attention to the dependencies
   <category>pypi-releases</category>
   <category>github-actions</category>
   <category>diffusers</category>
-  <guid>https://sayak.dev/posts/streamlined-releases.html</guid>
+  <guid>https://adtygan.github.io/posts/streamlined-releases.html</guid>
   <pubDate>Fri, 15 Mar 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://sayak.dev/posts/pypi-releases-diffusers.png" medium="image" type="image/png" height="72" width="144"/>
+  <media:content url="https://adtygan.github.io/posts/pypi-releases-diffusers.png" medium="image" type="image/png" height="72" width="144"/>
 </item>
 <item>
   <title>Another Quarto Migration Guide for fastpages Users</title>
-  <link>https://sayak.dev/posts/quarto-migration.html</link>
+  <link>https://adtygan.github.io/posts/quarto-migration.html</link>
   <description><![CDATA[ 
 
 
@@ -159,12 +159,12 @@ font-style: inherit;">pip</span> install git+https://github.com/fastai/nbdev</sp
   <category>quarto</category>
   <category>blogging</category>
   <category>fastpages</category>
-  <guid>https://sayak.dev/posts/quarto-migration.html</guid>
+  <guid>https://adtygan.github.io/posts/quarto-migration.html</guid>
   <pubDate>Wed, 17 Jan 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Practicing ML in a Non-ML Job</title>
-  <link>https://sayak.dev/posts/ml-practice.html</link>
+  <link>https://adtygan.github.io/posts/ml-practice.html</link>
   <description><![CDATA[ 
 
 
@@ -253,12 +253,12 @@ font-style: inherit;">pip</span> install git+https://github.com/fastai/nbdev</sp
  ]]></description>
   <category>ml-practice</category>
   <category>jobs</category>
-  <guid>https://sayak.dev/posts/ml-practice.html</guid>
+  <guid>https://adtygan.github.io/posts/ml-practice.html</guid>
   <pubDate>Fri, 27 May 2022 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>First Steps in GSoC</title>
-  <link>https://sayak.dev/posts/gsoc-faqs.html</link>
+  <link>https://adtygan.github.io/posts/gsoc-faqs.html</link>
   <description><![CDATA[ 
 
 
@@ -316,12 +316,12 @@ font-style: inherit;">pip</span> install git+https://github.com/fastai/nbdev</sp
  ]]></description>
   <category>gsoc</category>
   <category>open-source</category>
-  <guid>https://sayak.dev/posts/gsoc-faqs.html</guid>
+  <guid>https://adtygan.github.io/posts/gsoc-faqs.html</guid>
   <pubDate>Sun, 13 Mar 2022 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Publishing ConvNeXt Models on TensorFlow Hub</title>
-  <link>https://sayak.dev/posts/convnext-tfhub.html</link>
+  <link>https://adtygan.github.io/posts/convnext-tfhub.html</link>
   <description><![CDATA[ 
 
 
@@ -637,13 +637,13 @@ font-style: inherit;">True</span>))</span></code></pre></div>
   <category>cnns</category>
   <category>imagenet-1k</category>
   <category>convnext</category>
-  <guid>https://sayak.dev/posts/convnext-tfhub.html</guid>
+  <guid>https://adtygan.github.io/posts/convnext-tfhub.html</guid>
   <pubDate>Thu, 03 Feb 2022 00:00:00 GMT</pubDate>
-  <media:content url="https://sayak.dev/posts/convnext_tfhub/convnext_header.png" medium="image" type="image/png" height="93" width="144"/>
+  <media:content url="https://adtygan.github.io/posts/convnext_tfhub/convnext_header.png" medium="image" type="image/png" height="93" width="144"/>
 </item>
 <item>
   <title>Distributed Training in TensorFlow with AI Platform &amp; Docker</title>
-  <link>https://sayak.dev/posts/distributed-training.html</link>
+  <link>https://adtygan.github.io/posts/distributed-training.html</link>
   <description><![CDATA[ 
 
 
@@ -976,13 +976,13 @@ Important
   <category>ai-platform</category>
   <category>docker</category>
   <category>mlops</category>
-  <guid>https://sayak.dev/posts/distributed-training.html</guid>
+  <guid>https://adtygan.github.io/posts/distributed-training.html</guid>
   <pubDate>Tue, 06 Apr 2021 00:00:00 GMT</pubDate>
-  <media:content url="https://sayak.dev/posts/distributed_training.png" medium="image" type="image/png" height="113" width="144"/>
+  <media:content url="https://adtygan.github.io/posts/distributed_training.png" medium="image" type="image/png" height="113" width="144"/>
 </item>
 <item>
   <title>Building and Installing OpenCV 4.5.0 on an M1 Mac</title>
-  <link>https://sayak.dev/posts/install-opencv-m1.html</link>
+  <link>https://adtygan.github.io/posts/install-opencv-m1.html</link>
   <description><![CDATA[ 
 
 
@@ -1242,15 +1242,15 @@ font-style: inherit;">&gt;&gt;&gt; cv2.__version__</span></span></code></pre></d
 </section>
 
  ]]></description>
-  <guid>https://sayak.dev/posts/install-opencv-m1.html</guid>
+  <guid>https://adtygan.github.io/posts/install-opencv-m1.html</guid>
   <pubDate>Fri, 01 Jan 2021 00:00:00 GMT</pubDate>
-  <media:content url="https://sayak.dev/posts/opencv_m1.png" medium="image" type="image/png" height="87" width="144"/>
+  <media:content url="https://adtygan.github.io/posts/opencv_m1.png" medium="image" type="image/png" height="87" width="144"/>
 </item>
 <item>
   <title>A Battle of Text Detectors for Mobile Deployments: CRAFT vs. EAST</title>
   <dc:creator>Sayak Paul</dc:creator>
   <dc:creator>Tulasi Ram Laghumavarapu</dc:creator>
-  <link>https://sayak.dev/posts/optimizing-text-detectors.html</link>
+  <link>https://adtygan.github.io/posts/optimizing-text-detectors.html</link>
   <description><![CDATA[ 
 
 
@@ -1417,13 +1417,13 @@ Important
 </section>
 
  ]]></description>
-  <guid>https://sayak.dev/posts/optimizing-text-detectors.html</guid>
+  <guid>https://adtygan.github.io/posts/optimizing-text-detectors.html</guid>
   <pubDate>Fri, 27 Nov 2020 00:00:00 GMT</pubDate>
-  <media:content url="https://sayak.dev/posts/text_detector_benchmark.png" medium="image" type="image/png" height="131" width="144"/>
+  <media:content url="https://adtygan.github.io/posts/text_detector_benchmark.png" medium="image" type="image/png" height="131" width="144"/>
 </item>
 <item>
   <title>Optimizing MobileDet for Mobile Deployments</title>
-  <link>https://sayak.dev/posts/mobiledet-optimization.html</link>
+  <link>https://adtygan.github.io/posts/mobiledet-optimization.html</link>
   <description><![CDATA[ 
 
 
@@ -1818,13 +1818,13 @@ Note
   <category>tflite</category>
   <category>model-optimization</category>
   <category>mobiledet</category>
-  <guid>https://sayak.dev/posts/mobiledet-optimization.html</guid>
+  <guid>https://adtygan.github.io/posts/mobiledet-optimization.html</guid>
   <pubDate>Tue, 29 Sep 2020 00:00:00 GMT</pubDate>
-  <media:content url="https://sayak.dev/posts/benchmark.png" medium="image" type="image/png" height="62" width="144"/>
+  <media:content url="https://adtygan.github.io/posts/benchmark.png" medium="image" type="image/png" height="62" width="144"/>
 </item>
 <item>
   <title>The Maker Philosophy with ML APIs</title>
-  <link>https://sayak.dev/posts/mlapis-maker.html</link>
+  <link>https://adtygan.github.io/posts/mlapis-maker.html</link>
   <description><![CDATA[ 
 
 
@@ -2104,12 +2104,12 @@ font-style: inherit;">=</span> text</span></code></pre></div>
   <category>gcp</category>
   <category>vision</category>
   <category>apis</category>
-  <guid>https://sayak.dev/posts/mlapis-maker.html</guid>
+  <guid>https://adtygan.github.io/posts/mlapis-maker.html</guid>
   <pubDate>Fri, 25 Sep 2020 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>A few favorite recipes in computer vision &amp; deep learning</title>
-  <link>https://sayak.dev/posts/2020-08-02-favorite-recipes-vision.html</link>
+  <link>https://adtygan.github.io/posts/2020-08-02-favorite-recipes-vision.html</link>
   <description><![CDATA[ 
 
 
@@ -2246,13 +2246,13 @@ Note
   <category>visual-representation-learning</category>
   <category>self-supervised-learning</category>
   <category>computer-vision</category>
-  <guid>https://sayak.dev/posts/2020-08-02-favorite-recipes-vision.html</guid>
+  <guid>https://adtygan.github.io/posts/2020-08-02-favorite-recipes-vision.html</guid>
   <pubDate>Sun, 02 Aug 2020 00:00:00 GMT</pubDate>
-  <media:content url="https://sayak.dev/posts/montage_vrl.png" medium="image" type="image/png" height="107" width="144"/>
+  <media:content url="https://adtygan.github.io/posts/montage_vrl.png" medium="image" type="image/png" height="107" width="144"/>
 </item>
 <item>
   <title>Using TensorRT for accelerated deep learning inference</title>
-  <link>https://sayak.dev/posts/tftrt-optimization.html</link>
+  <link>https://adtygan.github.io/posts/tftrt-optimization.html</link>
   <description><![CDATA[ 
 
 
@@ -2316,7 +2316,7 @@ font-style: inherit;">=</span> tf.keras.applications.mobilenet_v2.preprocess_inp
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://sayak.dev/posts/2020-07-01-accelerated-inference-trt_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://adtygan.github.io/posts/2020-07-01-accelerated-inference-trt_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -2716,13 +2716,13 @@ Important
   <category>tf.keras</category>
   <category>tensorrt</category>
   <category>tensorflow</category>
-  <guid>https://sayak.dev/posts/tftrt-optimization.html</guid>
+  <guid>https://adtygan.github.io/posts/tftrt-optimization.html</guid>
   <pubDate>Wed, 01 Jul 2020 00:00:00 GMT</pubDate>
-  <media:content url="https://sayak.dev/posts/speed.png" medium="image" type="image/png" height="81" width="144"/>
+  <media:content url="https://adtygan.github.io/posts/speed.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
   <title>Different data augmentation recipes in tf.keras for image classification</title>
-  <link>https://sayak.dev/posts/augmentation-recipes.html</link>
+  <link>https://adtygan.github.io/posts/augmentation-recipes.html</link>
   <description><![CDATA[ 
 
 
@@ -2842,7 +2842,7 @@ font-style: inherit;">print</span>(images.shape, labels.shape)</span>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://sayak.dev/posts/2020-05-10-augmemtation-recipes_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="https://adtygan.github.io/posts/2020-05-10-augmemtation-recipes_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -2982,7 +2982,7 @@ font-style: inherit;">False</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://sayak.dev/posts/2020-05-10-augmemtation-recipes_files/figure-html/cell-14-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="https://adtygan.github.io/posts/2020-05-10-augmemtation-recipes_files/figure-html/cell-14-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -3086,7 +3086,7 @@ font-style: inherit;">'off'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://sayak.dev/posts/2020-05-10-augmemtation-recipes_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://adtygan.github.io/posts/2020-05-10-augmemtation-recipes_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -3334,7 +3334,7 @@ font-style: inherit;">'off'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://sayak.dev/posts/2020-05-10-augmemtation-recipes_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://adtygan.github.io/posts/2020-05-10-augmemtation-recipes_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -3357,13 +3357,13 @@ font-style: inherit;">'off'</span>)</span></code></pre></div>
   <category>tf.keras</category>
   <category>data_augmentation</category>
   <category>image</category>
-  <guid>https://sayak.dev/posts/augmentation-recipes.html</guid>
+  <guid>https://adtygan.github.io/posts/augmentation-recipes.html</guid>
   <pubDate>Sun, 10 May 2020 00:00:00 GMT</pubDate>
-  <media:content url="https://sayak.dev/posts/augmentation.png" medium="image" type="image/png" height="145" width="144"/>
+  <media:content url="https://adtygan.github.io/posts/augmentation.png" medium="image" type="image/png" height="145" width="144"/>
 </item>
 <item>
   <title>Sharing your work online effectively</title>
-  <link>https://sayak.dev/posts/sharing-work.html</link>
+  <link>https://adtygan.github.io/posts/sharing-work.html</link>
   <description><![CDATA[ 
 
 
@@ -3399,12 +3399,12 @@ font-style: inherit;">'off'</span>)</span></code></pre></div>
  ]]></description>
   <category>blogs</category>
   <category>sharing</category>
-  <guid>https://sayak.dev/posts/sharing-work.html</guid>
+  <guid>https://adtygan.github.io/posts/sharing-work.html</guid>
   <pubDate>Mon, 20 Apr 2020 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Embedding an image preprocessing function in a tf.keras model</title>
-  <link>https://sayak.dev/posts/2020-04-13-embedding-image-preprocessing-functions.html</link>
+  <link>https://adtygan.github.io/posts/2020-04-13-embedding-image-preprocessing-functions.html</link>
   <description><![CDATA[ 
 
 
@@ -3511,7 +3511,7 @@ font-style: inherit;">=</span>plt.cm.binary)</span>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://sayak.dev/posts/2020-04-13-embedding-image-preprocessing-functions_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://adtygan.github.io/posts/2020-04-13-embedding-image-preprocessing-functions_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -3643,7 +3643,7 @@ font-style: inherit;">True</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 <figure class="figure">
-<p><img src="https://sayak.dev/posts/2020-04-13-embedding-image-preprocessing-functions_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://adtygan.github.io/posts/2020-04-13-embedding-image-preprocessing-functions_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -3772,7 +3772,7 @@ font-style: inherit;">=</span>plt.cm.binary)</span>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://sayak.dev/posts/2020-04-13-embedding-image-preprocessing-functions_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://adtygan.github.io/posts/2020-04-13-embedding-image-preprocessing-functions_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -3836,7 +3836,7 @@ font-style: inherit;">=</span>plt.cm.binary)</span>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://sayak.dev/posts/2020-04-13-embedding-image-preprocessing-functions_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://adtygan.github.io/posts/2020-04-13-embedding-image-preprocessing-functions_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -4261,7 +4261,7 @@ font-style: inherit;">0</span>]]</span></code></pre></div>
 </section>
 
  ]]></description>
-  <guid>https://sayak.dev/posts/2020-04-13-embedding-image-preprocessing-functions.html</guid>
+  <guid>https://adtygan.github.io/posts/2020-04-13-embedding-image-preprocessing-functions.html</guid>
   <pubDate>Mon, 13 Apr 2020 00:00:00 GMT</pubDate>
 </item>
 </channel>
