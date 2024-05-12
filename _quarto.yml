@@ -11,7 +11,7 @@ format:
 
 website:
   title: "Sayak Paul"
-  site-url: "https://sayak.dev/"
+  site-url: "https://adtygan.github.io/"
   description: "Personal site of Sayak Paul."
   favicon: posts/favicon.ico
   search: false
@@ -21,8 +21,8 @@ website:
   open-graph: true
   repo-actions: [edit, issue]
   repo-branch: "master"
-  repo-url: "https://github.com/sayakpaul/portfolio"
-  google-analytics: "UA-163448909-1"
+  repo-url: "https://github.com/adtygan.github.io"
+  #google-analytics: "UA-163448909-1"
   navbar:
     background: primary
     left:
@@ -47,5 +47,5 @@ website:
 execute:
   freeze: auto
 
-resources:
-  - CNAME
+#resources:
+#  - CNAME
