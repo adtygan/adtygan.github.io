@@ -22,7 +22,7 @@ website:
   repo-actions: [edit, issue]
   repo-branch: "master"
   repo-url: "https://github.com/adtygan/adtygan.github.io"
-  #google-analytics: "UA-163448909-1"
+  google-analytics: "G-NFCQ6EFF47"
   navbar:
     background: primary
     left:
