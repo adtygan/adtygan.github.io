@@ -1,18 +1,20 @@
 ---
 aliases:
-- /fswatcb
+- /fswatch
 permalink: /fswatch
 badges: false
 toc: true
 categories:
 - File-Systems
 date: '2024-04-01'
-description: "Introduction to file tracking using `fswatch`"
+description: "Introduction to file change monitoring using fswatch"
 hide: false
 output-file: fswatch.html
 search_exclude: false
 title: 'Never Miss a New File with fswatch'
 ---
+
+![](media/fswatch.png)
 
 ## Context 
 As someone with a new found interest in automating things, I have been working on building a local image search engine called **WarpSearch**. It will allow me to query locally stored images using text and this is amazing because I can dump all my images in one folder and be very hopeful that I will be able to find it later. But folders don't remain the same. Images get added or deleted and I need to keep track of these changes.

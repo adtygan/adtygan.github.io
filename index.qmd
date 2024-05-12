@@ -4,10 +4,14 @@ toc: false
 ---
 
 Greetings 👋, I'm Aditya, an AI practitioner and tinkerer. I recently graduated 
-  from the National University of Singapore where I was advised by 
-  [Prof. Lee Wee Sun](https://www.comp.nus.edu.sg/~leews/), and worked
- on improving text-to-image retrieval systems for product matching.
+from the National University of Singapore where I was advised by 
+[Prof. Lee Wee Sun](https://www.comp.nus.edu.sg/~leews/), and worked
+on improving text-to-image retrieval systems for product matching.
 
 I'm deeply passionate about **Human Centered AI** and believe in an exciting future
- where AI increasingly augments human creativity. I'll be using this space to document
- the interesting projects I cook up.
+where AI increasingly augments human creativity. I'll be using this space to document
+the interesting projects I cook up.
+
+The structure of this website is inspired by [Sayak's site](https://sayak.dev)
+
+<img src="profile-pic.png" alt="profile pic" width="400"/>

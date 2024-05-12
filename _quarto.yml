@@ -13,7 +13,7 @@ website:
   title: "Aditya Ganesh Kumar"
   site-url: "https://adtygan.github.io/"
   description: "Personal site of Aditya Ganesh Kumar."
-  favicon: posts/favicon.ico
+  favicon: favicon.ico
   search: false
   twitter-card:
     creator: "@adtygan"
@@ -21,13 +21,13 @@ website:
   open-graph: true
   repo-actions: [edit, issue]
   repo-branch: "master"
-  repo-url: "https://github.com/adtygan/"
+  repo-url: "https://github.com/adtygan/adtygan.github.io"
   #google-analytics: "UA-163448909-1"
   navbar:
     background: primary
     left:
-      - text: "About Me"
-        href: pages/about.qmd
+      - text: "About"
+        href: index.qmd
       #- text: "Authoring"
       #  href: pages/authoring.qmd
       - text: "Blog"
