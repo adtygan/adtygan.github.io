@@ -16,7 +16,7 @@ website:
   favicon: posts/favicon.ico
   search: false
   twitter-card:
-    creator: "@RisingSayak"
+    creator: "@adtygan"
     card-style: summary
   open-graph: true
   repo-actions: [edit, issue]
