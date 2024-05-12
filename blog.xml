@@ -5,7 +5,7 @@
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       version="2.0">
 <channel>
-<title>Sayak Paul</title>
+<title>Aditya Ganesh Kumar</title>
 <link>https://adtygan.github.io/blog.html</link>
 <atom:link href="https://adtygan.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Personal site of Aditya Ganesh Kumar.</description>
@@ -20,8 +20,276 @@
 
 
 
+<section id="context" class="level2">
+<h2 class="anchored" data-anchor-id="context">Context</h2>
+<p>As someone with a new found interest in automating things, I have been working on building a local image search engine called <strong>WarpSearch</strong>. It will allow me to query locally stored images using text and this is amazing because I can dump all my images in one folder and be very hopeful that I will be able to find it later. But folders don’t remain the same. Images get added or deleted and I need to keep track of these changes.</p>
+</section>
+<section id="enter-fswatch" class="level2">
+<h2 class="anchored" data-anchor-id="enter-fswatch">Enter <code>fswatch</code></h2>
+<p>This is where <a href="https://github.com/emcrisostomo/fswatch"><code>fswatch</code></a> comes in clutch. It’s a tool that allows monitoring a folder for changes. And in this post, I want to cover a general recipe that allows for detecting file additions and deletions in a folder.</p>
+<p>Let’s call the script <code>file-monitor.sh</code>. It monitors the folder path <code>~/Vault</code> and tracks files with extensions <code>.jpg</code>, <code>.jpeg</code> and <code>.png</code>. Both the folder path and file extensions tracked are easy to modify for different scenarios. Below is the code:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">FOLDER</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>~/Vault</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Define a function to get state of directory</span></span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">get_state()</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">find</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$FOLDER</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-type</span> f <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\(</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-iname</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*.jpg"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-iname</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*.jpeg"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-iname</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*.png"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\)</span></span>
+<span id="cb1-6"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-7"></span>
+<span id="cb1-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Initialize previous_state with state of directory</span></span>
+<span id="cb1-9"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">previous_state</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">get_state</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb1-10"></span>
+<span id="cb1-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Monitor the ~/Vault directory for changes</span></span>
+<span id="cb1-12"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">fswatch</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-0</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$FOLDER</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">while</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">read</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-d</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">event</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">do</span></span>
+<span id="cb1-13">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># For each event, list current state of directory </span></span>
+<span id="cb1-14">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">current_state</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">get_state</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb1-15">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Diff current state with previous state</span></span>
+<span id="cb1-16">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;(</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$previous_state</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;(</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$current_state</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">while</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">read</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">line</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">do</span></span>
+<span id="cb1-17">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[[</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$line</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&gt;"</span><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]];</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">then</span></span>
+<span id="cb1-18">      <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Added: </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${line</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb1-19">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">elif</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[[</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$line</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&lt;"</span><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&amp;&amp;</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">!</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">-z</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${line</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]];</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">then</span></span>
+<span id="cb1-20">      <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Deleted: </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${line</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb1-21">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">fi</span></span>
+<span id="cb1-22">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">done</span></span>
+<span id="cb1-23">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">previous_state</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$current_state</span></span>
+<span id="cb1-24"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">done</span></span></code></pre></div>
+<p>The code works by comparing the current state of the folder with its previous state. This allows it to detect file additions and deletions. After starting the script with <code>bash file-monitor.sh</code>, I added 2 images and renamed 1 exising image. Here is the output it produces:</p>
+<pre class="shell"><code>Added: /Users/aditya/Vault/Orange Boat.jpg
+Added: /Users/aditya/Vault/Futuristic Red.jpg
+Deleted: /Users/aditya/Vault/Orange Boat.jpg
+Added: /Users/aditya/Vault/Orange Boat Illustration.jpg</code></pre>
+<p>As you can see, the script handles renaming as a combination of deletion and addition. This is a limitation of the chosen approach. A fix that I haven’t explored involves the following: When a <code>Deletion + Addition</code> pair is detected, check if the file count remains same before and after the pair of operations. If so, it is a <code>Rename</code> operation.</p>
+</section>
+<section id="running-as-background-process" class="level2">
+<h2 class="anchored" data-anchor-id="running-as-background-process">Running as Background Process</h2>
+<p>In most cases, we want the script to run in the background, even after we have closed the terminal. To do this, we first give the script permission to execute as a program.</p>
+<pre class="shell"><code>chmod +x ./file-monitor.sh       </code></pre>
+<p>Then, we use <code>nohup</code> to run the process in detached mode and store the outputs in a separate log file.</p>
+<pre class="shell"><code>nohup ./file-monitor.sh &gt; fswatch.log</code></pre>
+</section>
+<section id="closing-thoughts" class="level2">
+<h2 class="anchored" data-anchor-id="closing-thoughts">Closing Thoughts</h2>
+<p>That wraps it up for my first mini-blog. I hope this post encourages you to check out <code>fswatch</code> and try out this recipe for your own use cases. If you have any questions or suggestions, please reach out to me <a href="https://twitter.com/adtygan">on Twitter</a>.</p>
 
 
+</section>
 
  ]]></description>
   <category>File-Systems</category>
