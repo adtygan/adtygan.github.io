@@ -1,43 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://adtygan.github.io/pages/resources.html</loc>
-    <lastmod>2024-05-12T17:40:53.930Z</lastmod>
+    <loc>https://adtygan.github.io/blog.html</loc>
+    <lastmod>2024-05-12T13:41:13.243Z</lastmod>
   </url>
   <url>
     <loc>https://adtygan.github.io/pages/education.html</loc>
-    <lastmod>2024-05-12T17:40:53.930Z</lastmod>
-  </url>
-  <url>
-    <loc>https://adtygan.github.io/pages/research.html</loc>
-    <lastmod>2024-05-12T17:40:53.930Z</lastmod>
-  </url>
-  <url>
-    <loc>https://adtygan.github.io/pages/xyz.html</loc>
-    <lastmod>2024-05-12T17:40:53.930Z</lastmod>
-  </url>
-  <url>
-    <loc>https://adtygan.github.io/blog.html</loc>
-    <lastmod>2024-05-12T17:40:53.930Z</lastmod>
-  </url>
-  <url>
-    <loc>https://adtygan.github.io/posts/fswatch.html</loc>
-    <lastmod>2024-05-12T17:40:53.930Z</lastmod>
-  </url>
-  <url>
-    <loc>https://adtygan.github.io/index.html</loc>
-    <lastmod>2024-05-12T17:40:53.930Z</lastmod>
+    <lastmod>2024-05-12T13:41:13.243Z</lastmod>
   </url>
   <url>
     <loc>https://adtygan.github.io/pages/authoring.html</loc>
-    <lastmod>2024-05-12T17:40:53.930Z</lastmod>
+    <lastmod>2024-05-12T13:41:13.243Z</lastmod>
+  </url>
+  <url>
+    <loc>https://adtygan.github.io/pages/research.html</loc>
+    <lastmod>2024-05-12T13:41:13.244Z</lastmod>
+  </url>
+  <url>
+    <loc>https://adtygan.github.io/posts/swarms-business-agent.html</loc>
+    <lastmod>2024-06-24T06:35:03.451Z</lastmod>
+  </url>
+  <url>
+    <loc>https://adtygan.github.io/posts/fswatch.html</loc>
+    <lastmod>2024-06-24T04:26:03.146Z</lastmod>
+  </url>
+  <url>
+    <loc>https://adtygan.github.io/posts/rope-notes.html</loc>
+    <lastmod>2024-06-24T07:42:09.354Z</lastmod>
+  </url>
+  <url>
+    <loc>https://adtygan.github.io/index.html</loc>
+    <lastmod>2024-05-13T15:41:48.068Z</lastmod>
+  </url>
+  <url>
+    <loc>https://adtygan.github.io/pages/xyz.html</loc>
+    <lastmod>2024-05-12T13:41:13.244Z</lastmod>
   </url>
   <url>
     <loc>https://adtygan.github.io/pages/talksseminarsworkshops.html</loc>
-    <lastmod>2024-05-12T17:40:53.930Z</lastmod>
+    <lastmod>2024-05-12T13:41:13.244Z</lastmod>
   </url>
   <url>
     <loc>https://adtygan.github.io/pages/interviews.html</loc>
-    <lastmod>2024-05-12T17:40:53.930Z</lastmod>
+    <lastmod>2024-05-12T13:41:13.244Z</lastmod>
+  </url>
+  <url>
+    <loc>https://adtygan.github.io/pages/resources.html</loc>
+    <lastmod>2024-05-12T13:41:13.244Z</lastmod>
   </url>
 </urlset>

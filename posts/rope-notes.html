@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2024-06-24">
+<meta name="description" content="Deep dive into the paper behind the popular RoPE technique">
 
-<title>Aditya Ganesh Kumar</title>
+<title>Aditya Ganesh Kumar - Notes on RoFormer: Enhanced Transformer with Rotary Position Embedding</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,21 +25,21 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<link href="./favicon.ico" rel="icon">
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../favicon.ico" rel="icon">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -63,25 +65,54 @@ gtag('js', new Date());
 gtag('config', 'G-NFCQ6EFF47', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Aditya Ganesh Kumar">
-<meta property="og:description" content="Personal site of Aditya Ganesh Kumar.">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="Aditya Ganesh Kumar - Notes on RoFormer: Enhanced Transformer with Rotary Position Embedding">
+<meta property="og:description" content="Deep dive into the paper behind the popular RoPE technique">
 <meta property="og:site_name" content="Aditya Ganesh Kumar">
-<meta name="twitter:title" content="Aditya Ganesh Kumar">
-<meta name="twitter:description" content="Personal site of Aditya Ganesh Kumar.">
+<meta name="twitter:title" content="Aditya Ganesh Kumar - Notes on RoFormer: Enhanced Transformer with Rotary Position Embedding">
+<meta name="twitter:description" content="Deep dive into the paper behind the popular RoPE technique">
 <meta name="twitter:creator" content="@adtygan">
 <meta name="twitter:card" content="summary">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Aditya Ganesh Kumar</span>
     </a>
   </div>
@@ -91,11 +122,11 @@ gtag('config', 'G-NFCQ6EFF47', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html"> 
+    <a class="nav-link" href="../blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
 </ul>
@@ -124,40 +155,295 @@ gtag('config', 'G-NFCQ6EFF47', { 'anonymize_ip': true});
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Notes on <em>RoFormer: Enhanced Transformer with Rotary Position Embedding</em></h1>
+                  <div>
+        <div class="description">
+          Deep dive into the paper behind the popular RoPE technique
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Notes</div>
+                <div class="quarto-category">Transformers</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 24, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#absolute-positional-embedding" id="toc-absolute-positional-embedding" class="nav-link active" data-scroll-target="#absolute-positional-embedding">Absolute Positional Embedding</a>
+  <ul class="collapse">
+  <li><a href="#formulation" id="toc-formulation" class="nav-link" data-scroll-target="#formulation">📝&nbsp;Formulation</a></li>
+  <li><a href="#visual-intuition-of-why-it-works" id="toc-visual-intuition-of-why-it-works" class="nav-link" data-scroll-target="#visual-intuition-of-why-it-works">🖼️&nbsp;Visual Intuition of Why it Works</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">🟡 Limitations</a></li>
+  </ul></li>
+  <li><a href="#relative-positional-embedding-t5-model" id="toc-relative-positional-embedding-t5-model" class="nav-link" data-scroll-target="#relative-positional-embedding-t5-model">Relative Positional Embedding (T5 model)</a>
+  <ul class="collapse">
+  <li><a href="#formulation-1" id="toc-formulation-1" class="nav-link" data-scroll-target="#formulation-1">📝&nbsp;Formulation</a></li>
+  <li><a href="#limitations-1" id="toc-limitations-1" class="nav-link" data-scroll-target="#limitations-1">🟡&nbsp;Limitations</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/adtygan/adtygan.github.io/edit/master/posts/rope-notes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/adtygan/adtygan.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Aditya Ganesh Kumar</h1>
+
+
+
+
+<p><img src="media/roformer-head.png" class="img-fluid"></p>
+<ul>
+<li>RoPE overcomes limitations of its 2 precursors: <strong>Absolute</strong> and <strong>Relative Positional Embedding</strong></li>
+<li>It takes the best-of-both-worlds approach
+<ul>
+<li>Encodes absolute positions using rotation matrix</li>
+<li>Incorporates relative positions into the attention matrix</li>
+</ul></li>
+<li>Offers 3 benefits:
+<ul>
+<li>Flexibly adapts to work for <strong>any sequence length</strong></li>
+<li><strong>Decays the inter-token dependency</strong> as relative distance increases</li>
+<li>Equips <strong>linear self-attention</strong> with relative position encoding</li>
+</ul></li>
+</ul>
+<section id="absolute-positional-embedding" class="level2">
+<h2 class="anchored" data-anchor-id="absolute-positional-embedding">Absolute Positional Embedding</h2>
+<ul>
+<li>Input embeddings fed to transformer only convey meaning of token in isolation</li>
+<li>We want model to treat nearby words as <em>nearby</em> and distant words as <em>distant</em>
+<ul>
+<li>Important because self-attention is position invariant</li>
+</ul></li>
+<li>Represent the above in a manner that model can understand</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/abs-pe-1.png" class="img-fluid figure-img"></p>
+<figcaption>Source: <strong>Umar Jamil</strong>, <a href="https://www.youtube.com/watch?v=bCz4OMemCcA">Attention is all you need (Transformer)</a></figcaption>
+</figure>
 </div>
+<p><span class="math display">\[EncoderInput[i]= Embedding[i] + PositionalEmbedding[i]\]</span></p>
+<section id="formulation" class="level3">
+<h3 class="anchored" data-anchor-id="formulation">📝&nbsp;Formulation</h3>
+<p><span class="math display">\[f_{t: t \in\{q, k, v\}}(\boldsymbol{x}_i, i):= \\
+\boldsymbol{W}_{t: t \in\{q, k, v\}}(\boldsymbol{x}_i, \boldsymbol{p_i})\]</span></p>
+<p><span class="math display">\[\begin{cases} \\
+\mathbf{p}_{i, 2t} = \sin \left( k/{10000^{2t/d}} \right) \\
+\mathbf{p}_{i, 2t+1} = \cos \left( k/{10000^{2t/d}} \right)
+\end{cases}\]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/abs-pe-2.png" class="img-fluid figure-img"></p>
+<figcaption>Source: <strong>Umar Jamil</strong>, <a href="https://www.youtube.com/watch?v=bCz4OMemCcA">Attention is all you need (Transformer)</a></figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+✍🏻 Example
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><span class="math inline">\(PE(1,3)\)</span> pertains to the <strong>second token in the sentence</strong> and the <strong>fourth value of the token embedding</strong></li>
+<li>Hence we use, <span class="math inline">\(pos=1\)</span>, <span class="math inline">\(2i=2\)</span> and <span class="math inline">\(cos\)</span></li>
+<li><span class="math inline">\(i \in [0, d_{model}/2 -1]\)</span>&nbsp;(<em>Note&nbsp;<span class="math inline">\(d_{model}\)</span>&nbsp;is always kept as an even number</em>)
+<ul>
+<li>if <span class="math inline">\(d_{model} = 6\)</span> , <span class="math inline">\(i \in [0,6/2 - 1] =&gt; i \in [0,2]\)</span></li>
+</ul></li>
+<li>This produces 6 values for the second index
+<ul>
+<li><span class="math inline">\([(2*0), (2*0+1), (2*1), (2*1+1), (2*2), (2*2+1)]\)</span></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<ul>
+<li>PE values are only computed once and reused for&nbsp;<strong>every sentence</strong>&nbsp;during both training and inference</li>
+<li>All we have to do is add these PE values with input embeddings, which change for every sentence</li>
+</ul>
+</section>
+<section id="visual-intuition-of-why-it-works" class="level3">
+<h3 class="anchored" data-anchor-id="visual-intuition-of-why-it-works">🖼️&nbsp;Visual Intuition of Why it Works</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/abs-pe-3.png" class="img-fluid figure-img"></p>
+<figcaption>Source: <strong>Amirhossein Kazemnejad</strong>, <a href="https://kazemnejad.com/blog/transformer_architecture_positional_encoding/">Transformer Architecture: The Positional Encoding</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Each row is a relative position embedding (<em>there are 50 token positions here</em>)</li>
+<li>Closer positions have visually similar encodings than farther ones</li>
+</ul>
+</section>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">🟡 Limitations</h3>
+<ul>
+<li><strong>Sequence Length Bottleneck:</strong> We cannot represent PE values (<em>and thereby, distance</em>) beyond the sequence length we set (<em>128 in the above diagram</em>)</li>
+<li><strong>Lack of Relative Positions:</strong> PE values are computed independently, hence, model treats <ins>pos 1 vs pos 2</ins> the same way as <ins>pos 2 vs pos 100</ins></li>
+</ul>
+</section>
+</section>
+<section id="relative-positional-embedding-t5-model" class="level2">
+<h2 class="anchored" data-anchor-id="relative-positional-embedding-t5-model">Relative Positional Embedding (T5 model)</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/rel-pe-1.png" class="img-fluid figure-img"></p>
+<figcaption>Source: <strong>Efficient NLP</strong>, <a href="https://www.youtube.com/watch?v=o29P0Kpobz0">Rotary Positional Embeddings: Combining Absolute and Relative</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Instead of representing a token’s position, represent a distance offset between 2 tokens using <strong>trainable parameters</strong>
+<ul>
+<li>(<em>e.g.</em>) <span class="math inline">\(b_2\)</span> represents distance offset of 2</li>
+</ul></li>
+</ul>
+<table class="table-striped table-hover table">
+<caption>Offset/Bias Matrix</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th><span class="math inline">\(Anthony\)</span></th>
+<th><span class="math inline">\(Hopkins\)</span></th>
+<th><span class="math inline">\(admired\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(Anthony\)</span></td>
+<td><span class="math inline">\(b_0\)</span></td>
+<td><span class="math inline">\(b_1\)</span></td>
+<td><span class="math inline">\(b_2\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(Hopkins\)</span></td>
+<td><span class="math inline">\(b_{-1}\)</span></td>
+<td><span class="math inline">\(b_0\)</span></td>
+<td><span class="math inline">\(b_1\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(admired\)</span></td>
+<td><span class="math inline">\(b_{-2}\)</span></td>
+<td><span class="math inline">\(b_{-1}\)</span></td>
+<td><span class="math inline">\(b_0\)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Token pairs that are same distance apart have same offset value</li>
+<li>This offset matrix (<em>called bias</em>) is added to attention matrix to encode positions</li>
+</ul>
+<p><span class="math display">\[Final Attention Matrix = Attention Matrix + Offset Matrix\]</span></p>
+<section id="formulation-1" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-1">📝&nbsp;Formulation</h3>
+<p>Formualtion for Absolute Position Embedding:</p>
+<p><span class="math display">\[f_{t : t \in \{q, k, v\}} \left( \mathbf{x}_i, i \right) := \\
+\mathbf{W}_{t : t \in \{q, k, v\}} \left( \mathbf{x}_i + \mathbf{p}_i \right)\]</span></p>
+<p>Formulation expected for Relative Position Embedding:</p>
+<p><span class="math display">\[\begin{aligned}
+f_q (\mathbf{x}_m) &amp; := \mathbf{W}_q \mathbf{x}_m \\
+f_k (\mathbf{x}_n, n) &amp; := \mathbf{W}_k (\mathbf{x}_n + \tilde{\mathbf{p}}_r^k) \\
+f_v (\mathbf{x}_n, n) &amp; := \mathbf{W}_v (\mathbf{x}_n + \tilde{\mathbf{p}}_r^v)
+\end{aligned}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\tilde{p}^k_r\)</span> and <span class="math inline">\(\tilde{p}^v_r\)</span> are trainable relative position embeddings</li>
+<li><span class="math inline">\(r = clip(m − n, rmin, rmax)\)</span> , is clipped due to hypothesis that precise relative position is not useful beyond a certain distance</li>
+<li>After a few steps, below is the form we arrive for relative position embeddings:</li>
+</ul>
+<p><span class="math display">\[q_m^T k_n = x_m^T W_q^T W_k x_n + x_m^T W_q^T \tilde{W}_k \tilde{p}_{m-n} + \\
+\mathrm{u}^T W_q^T W_k x_n + \mathrm{v}^T W_q^T \tilde{W}_k \tilde{p}_{m-n}\]</span></p>
+<ul>
+<li>But, later works have simplified the form 🤗</li>
+<li>For instance, <strong>Colin Raffel et al.</strong> <em>“Exploring the limits of transfer learning with a unified text-to-text transformer”</em> use:</li>
+</ul>
+<p><span class="math display">\[q_m^T k_n = x_m^T W_q^T W_k x_n + b_{i,j}\]</span></p>
+<ul>
+<li>This form is similar to the one discussed for T5 model</li>
+</ul>
+</section>
+<section id="limitations-1" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-1">🟡&nbsp;Limitations</h3>
+<ul>
+<li><strong>Re-computation of Attention Matrix:</strong> Due to this, as sequence length increases, inference speed decreases</li>
+<li><strong>Issues with KV Cache:</strong> For every new token added to sequence, embeddings for all tokens will change, effectively rendering KV Cache impractical</li>
+</ul>
+<table class="table-striped table-hover table">
+<caption>Notice how bias values for each row changed (1 more value added)</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th><span class="math inline">\(Anthony\)</span></th>
+<th><span class="math inline">\(Hopkins\)</span></th>
+<th><span class="math inline">\(admired\)</span></th>
+<th><span class="math inline">\(Michael\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(Anthony\)</span></td>
+<td><span class="math inline">\(b_0\)</span></td>
+<td><span class="math inline">\(b_1\)</span></td>
+<td><span class="math inline">\(b_2\)</span></td>
+<td><span class="math inline">\(b_3\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(Hopkins\)</span></td>
+<td><span class="math inline">\(b_{-1}\)</span></td>
+<td><span class="math inline">\(b_0\)</span></td>
+<td><span class="math inline">\(b_1\)</span></td>
+<td><span class="math inline">\(b_2\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(admired\)</span></td>
+<td><span class="math inline">\(b_{-2}\)</span></td>
+<td><span class="math inline">\(b_{-1}\)</span></td>
+<td><span class="math inline">\(b_0\)</span></td>
+<td><span class="math inline">\(b_1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(Michael\)</span></td>
+<td><span class="math inline">\(b_{-3}\)</span></td>
+<td><span class="math inline">\(b_{-2}\)</span></td>
+<td><span class="math inline">\(b_{-1}\)</span></td>
+<td><span class="math inline">\(b_0\)</span></td>
+</tr>
+</tbody>
+</table>
 
 
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Greetings 👋, I’m Aditya, an AI practitioner and tinkerer. I recently graduated from the National University of Singapore where I was advised by <a href="https://www.comp.nus.edu.sg/~leews/">Prof.&nbsp;Lee Wee Sun</a>, and worked on improving text-to-image retrieval systems for product matching.</p>
-<p>I’m deeply passionate about <strong>Human Centered AI</strong> and believe in an exciting future where AI increasingly augments human creativity. I’ll be using this space to document the interesting projects I cook up.</p>
-<p>The structure of this website is inspired by <a href="https://sayak.dev">Sayak’s site</a>.</p>
-<center>
-<img src="profile-pic.png" width="350/">
-</center>
-
-
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -713,9 +999,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<script src="https://utteranc.es/client.js" repo="adtygan/adtygan.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
 </div> <!-- /content -->
 
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/adtygan/adtygan.github.io/edit/master/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/adtygan/adtygan.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/adtygan/adtygan.github.io/edit/master/posts/rope-notes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/adtygan/adtygan.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
