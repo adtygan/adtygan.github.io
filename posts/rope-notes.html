@@ -208,7 +208,18 @@ window.Quarto = {
   <li><a href="#enter-rotational-positional-embedding" id="toc-enter-rotational-positional-embedding" class="nav-link" data-scroll-target="#enter-rotational-positional-embedding">🧵&nbsp;Enter Rotational Positional Embedding 🧵</a>
   <ul class="collapse">
   <li><a href="#formulation-2" id="toc-formulation-2" class="nav-link" data-scroll-target="#formulation-2">📝&nbsp;Formulation</a></li>
+  <li><a href="#properties-of-rope" id="toc-properties-of-rope" class="nav-link" data-scroll-target="#properties-of-rope">🍀 Properties of RoPE</a></li>
   </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#machine-translation-wmt-2014-english--german-translation" id="toc-machine-translation-wmt-2014-english--german-translation" class="nav-link" data-scroll-target="#machine-translation-wmt-2014-english--german-translation">1. Machine Translation: WMT 2014 English -German Translation</a></li>
+  <li><a href="#pre-training-language-modeling" id="toc-pre-training-language-modeling" class="nav-link" data-scroll-target="#pre-training-language-modeling">2. Pre-training Language Modeling</a></li>
+  <li><a href="#performer-rope-for-pre-training" id="toc-performer-rope-for-pre-training" class="nav-link" data-scroll-target="#performer-rope-for-pre-training">3. Performer + RoPE for Pre-Training</a></li>
+  <li><a href="#fine-tuning-on-glue-tasks" id="toc-fine-tuning-on-glue-tasks" class="nav-link" data-scroll-target="#fine-tuning-on-glue-tasks">4. Fine-tuning on GLUE tasks</a></li>
+  <li><a href="#handling-long-texts-on-chinese-datasets" id="toc-handling-long-texts-on-chinese-datasets" class="nav-link" data-scroll-target="#handling-long-texts-on-chinese-datasets">5. Handling long texts on Chinese Datasets</a></li>
+  <li><a href="#limitations-of-rope" id="toc-limitations-of-rope" class="nav-link" data-scroll-target="#limitations-of-rope">🟡&nbsp;Limitations of RoPE</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">📋&nbsp;References</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/adtygan/adtygan.github.io/edit/master/posts/rope-notes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/adtygan/adtygan.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -480,9 +491,9 @@ f_v (\mathbf{x}_n, n) &amp; := \mathbf{W}_v (\mathbf{x}_n + \tilde{\mathbf{p}}_r
 <p><span class="math display">\[a_{m,n} = \frac{\exp(\frac{q_m^\top k_n}{\sqrt{d}})}{\sum_{j=1}^N \exp(\frac{q_m^\top k_j}{\sqrt{d}})}\]</span></p>
 <p><span class="math display">\[o_m = \sum_{n=1}^N a_{m,n}v_n\]</span></p>
 <ul>
-<li>In Absolute Positional Embedding method, <span class="math inline">\(q^T_m\)</span> and <span class="math inline">\(k_n\)</span> each encoded individual token positions</li>
+<li>In Absolute Positional Embedding method, <span class="math inline">\(q^T_m\)</span> and <span class="math inline">\(k_n\)</span> each encoded <strong>individual token positions</strong></li>
 <li>Hence, self-attention, (aka <span class="math inline">\(q^T_mk_n\)</span>) led to propagation of information about individual token positions</li>
-<li>We want to move away from that and only incorporate relative position information during the self-attention operation
+<li>We want to move away from that and only incorporate <strong>relative position information</strong> during the self-attention operation
 <ul>
 <li><em>In my understanding</em>, it is because the absolute position is already encoded in the rotation</li>
 </ul></li>
@@ -493,7 +504,7 @@ f_v (\mathbf{x}_n, n) &amp; := \mathbf{W}_v (\mathbf{x}_n + \tilde{\mathbf{p}}_r
 <li><span class="math inline">\(\langle \cdot, \cdot \rangle\)</span> denotes inner-product</li>
 </ul></li>
 </ul>
-<p><span class="math display">\[\langle f_q(x_m, m), f_k(x_n, n) \rangle = g(x_m, x_n, m - n)\]</span></p>
+<p><span class="math display">\[q^T_m k_n = \langle f_q(x_m, m), f_k(x_n, n) \rangle = g(x_m, x_n, m - n)\]</span></p>
 <ul>
 <li>Note that <span class="math inline">\(g(\cdot)\)</span> does not have any individual position information like <span class="math inline">\(g(\cdot, m, n)\)</span></li>
 </ul>
@@ -520,10 +531,152 @@ f_v (\mathbf{x}_n, n) &amp; := \mathbf{W}_v (\mathbf{x}_n + \tilde{\mathbf{p}}_r
 <ul>
 <li>Notice how first, the <strong>Key</strong> and <strong>Query</strong> are generated before rotation</li>
 </ul>
-
-
+</section>
+<section id="solution-for-general-case" class="level4">
+<h4 class="anchored" data-anchor-id="solution-for-general-case">Solution for General Case</h4>
+<ul>
+<li>For any <span class="math inline">\(d\)</span> dimensional input embedding, we assume <span class="math inline">\(d\)</span> is even and divide the embedding space into <span class="math inline">\(d/2\)</span> subspaces</li>
+</ul>
+<p><span class="math display">\[f_{\{q,k\}}(\textbf{x}_m, m) = \textbf{R}_{\Theta,m}^d \textbf{W}_{\{q,k\}} \textbf{x}_m\]</span></p>
+<p><span class="math display">\[
+\begin{equation}
+    R_{\Theta,m}^d = \begin{pmatrix}
+        \cos m\theta_1 &amp; -\sin m\theta_1 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0 \\
+        \sin m\theta_1 &amp; \cos m\theta_1 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0 \\
+        0 &amp; 0 &amp; \cos m\theta_2 &amp; -\sin m\theta_2 &amp; \cdots &amp; 0 &amp; 0 \\
+        0 &amp; 0 &amp; \sin m\theta_2 &amp; \cos m\theta_2 &amp; \cdots &amp; 0 &amp; 0 \\
+        \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+        0 &amp; 0 &amp; 0 &amp; 0 &amp; \cdots &amp; \cos m\theta_{d/2} &amp; -\sin m\theta_{d/2} \\
+        0 &amp; 0 &amp; 0 &amp; 0 &amp; \cdots &amp; \sin m\theta_{d/2} &amp; \cos m\theta_{d/2}
+    \end{pmatrix}
+\end{equation}
+\]</span></p>
+<ul>
+<li>This leads us to the <strong>general form</strong> of self-attention using RoPE</li>
+</ul>
+<p><span class="math display">\[\begin{equation}
+    \textbf{q}_m^\top \textbf{k}_n = (\textbf{R}_{\Theta,m}^d \textbf{W}_q \textbf{x}_m)^\top (\textbf{R}_{\Theta,n}^d \textbf{W}_k \textbf{x}_n) = \textbf{x}_m^\top \textbf{W}_q^\top \textbf{R}_{\Theta,n-m}^d \textbf{W}_k \textbf{x}_n
+\end{equation}\]</span></p>
+<ul>
+<li>Notice how RoPE incorporates relative position information in the self-attention step itself instead of adding it through a bias matrix like its precursor</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/rope-4.png" class="img-fluid figure-img"></p>
+<figcaption><strong>Implementation of RoPE</strong>, all subspaces within an embedding vector are rotated by same angle</figcaption>
+</figure>
+</div>
 </section>
 </section>
+<section id="properties-of-rope" class="level3">
+<h3 class="anchored" data-anchor-id="properties-of-rope">🍀 Properties of RoPE</h3>
+<section id="flexibly-adapts-to-any-sequence-length" class="level4">
+<h4 class="anchored" data-anchor-id="flexibly-adapts-to-any-sequence-length">Flexibly adapts to any sequence length</h4>
+<ul>
+<li>For any new token, all we need to do is rotate its vector by <span class="math inline">\(m\theta\)</span></li>
+<li>The method is scalable and requires no pre-computation</li>
+</ul>
+</section>
+<section id="decay-of-the-inter-token-dependency" class="level4">
+<h4 class="anchored" data-anchor-id="decay-of-the-inter-token-dependency">Decay of the inter-token dependency</h4>
+<ul>
+<li>Set <span class="math inline">\(\theta_i = 1000^{-2i/d}\)</span> following original transformers paper</li>
+<li>This causes inner-product to decay as relative position increases</li>
+</ul>
+<p><img src="media/rope-5.png" class="img-fluid"></p>
+<ul>
+<li>Relative upper bound is the <span class="math inline">\(\textbf{R}_{\Theta,n-m}^d\)</span> term in general form of RoPE: <span class="math inline">\(\textbf{x}_m^\top \textbf{W}_q^\top \textbf{R}_{\Theta,n-m}^d \textbf{W}_k \textbf{x}_n\)</span></li>
+</ul>
+</section>
+<section id="equips-linear-self-attention-with-relative-position-encoding" class="level4">
+<h4 class="anchored" data-anchor-id="equips-linear-self-attention-with-relative-position-encoding">Equips linear self-attention with relative position encoding</h4>
+<ul>
+<li>Instead of expressing self-attention in the usual way as:</li>
+</ul>
+<p><span class="math display">\[
+\begin{equation}
+    \text{Attention}(\textbf{Q}, \textbf{K}, \textbf{V})_m = \frac{\sum_{n=1}^N \text{sim}(\textbf{q}_m, \textbf{k}_n) \textbf{v}_n}{\sum_{n=1}^N \text{sim}(\textbf{q}_m, \textbf{k}_n)}
+\end{equation}
+\]</span></p>
+<ul>
+<li>Linear-attention expresses it as:</li>
+</ul>
+<p><span class="math display">\[
+\begin{equation}
+    \text{Attention}(\textbf{Q}, \textbf{K}, \textbf{V})_m = \frac{\sum_{n=1}^N \phi(\textbf{q}_m)^\top \phi(\textbf{k}_n) \textbf{v}_n}{\sum_{n=1}^N \phi(\textbf{q}_m)^\top \phi(\textbf{k}_n)}
+\end{equation}
+\]</span></p>
+<ul>
+<li>The authors propose that RoPE can be combined with linear-attention simply by multiplying the rotation matrices</li>
+</ul>
+<p><span class="math display">\[
+\begin{equation}
+    \text{Attention}(\textbf{Q}, \textbf{K}, \textbf{V})_m = \frac{\sum_{n=1}^N (\textbf{R}_{\Theta,m}^d \phi(\textbf{q}_m))^\top (\textbf{R}_{\Theta,n}^d \phi(\textbf{k}_n)) \textbf{v}_n}{\sum_{n=1}^N \phi(\textbf{q}_m)^\top \phi(\textbf{k}_n)}
+\end{equation}
+\]</span></p>
+</section>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<section id="machine-translation-wmt-2014-english--german-translation" class="level3">
+<h3 class="anchored" data-anchor-id="machine-translation-wmt-2014-english--german-translation">1. Machine Translation: WMT 2014 English -German Translation</h3>
+<ul>
+<li>Evaluate English-to-German translation</li>
+</ul>
+<p><img src="media/rope-6.png" class="img-fluid"></p>
+</section>
+<section id="pre-training-language-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="pre-training-language-modeling">2. Pre-training Language Modeling</h3>
+<ul>
+<li>Validate performance in learning contextual representations</li>
+<li><strong>Pre-training dataset</strong>: BookCorpus and Wikipedia Corpus Foundation</li>
+</ul>
+<p><img src="media/rope-7.png" class="img-fluid"></p>
+</section>
+<section id="performer-rope-for-pre-training" class="level3">
+<h3 class="anchored" data-anchor-id="performer-rope-for-pre-training">3. Performer + RoPE for Pre-Training</h3>
+<ul>
+<li>Performer uses <strong>linear-attention</strong></li>
+</ul>
+<p><img src="media/rope-8.png" class="img-fluid"></p>
+</section>
+<section id="fine-tuning-on-glue-tasks" class="level3">
+<h3 class="anchored" data-anchor-id="fine-tuning-on-glue-tasks">4. Fine-tuning on GLUE tasks</h3>
+<ul>
+<li><strong>GLUE (General Language Understanding Evaluation)</strong>: Benchmark for evaluating performance of natural language understanding (NLU) models across a diverse set of tasks</li>
+</ul>
+<p><img src="media/rope-9.png" class="img-fluid"></p>
+</section>
+<section id="handling-long-texts-on-chinese-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="handling-long-texts-on-chinese-datasets">5. Handling long texts on Chinese Datasets</h3>
+<ul>
+<li>Performance <strong>improves</strong> as sequence length increases</li>
+</ul>
+<p><img src="media/rope-10.png" class="img-fluid"></p>
+<p><img src="media/rope-11.png" class="img-fluid"></p>
+</section>
+<section id="limitations-of-rope" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-of-rope">🟡&nbsp;Limitations of RoPE</h3>
+<ul>
+<li>Unclear why RoPE <strong>converges faster</strong> than other strategies</li>
+<li>Superior performance on long texts cannot be explained convincingly
+<ul>
+<li>Attributed to <strong>long-term decay</strong>, but other strategies have this property as well</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">📋&nbsp;References</h2>
+<ol type="1">
+<li><strong>Jianlin Su, et al.</strong>, <a href="https://arxiv.org/abs/2104.09864">RoFormer: Enhanced Transformer with Rotary Position Embedding</a></li>
+<li><strong>Umar Jamil</strong>, <a href="https://www.youtube.com/watch?v=bCz4OMemCcA">Attention is all you need (Transformer)</a></li>
+<li><strong>Amirhossein Kazemnejad</strong>, <a href="https://kazemnejad.com/blog/transformer_architecture_positional_encoding/">Transformer Architecture: The Positional Encoding</a></li>
+<li><strong>Efficient NLP</strong>, <a href="https://www.youtube.com/watch?v=o29P0Kpobz0">Rotary Positional Embeddings: Combining Absolute and Relative</a></li>
+</ol>
+
+
 </section>
 
 </main> <!-- /main -->

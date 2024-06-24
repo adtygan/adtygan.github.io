@@ -270,9 +270,9 @@
 <p><img src="https://latex.codecogs.com/png.latex?a_%7Bm,n%7D%20=%20%5Cfrac%7B%5Cexp(%5Cfrac%7Bq_m%5E%5Ctop%20k_n%7D%7B%5Csqrt%7Bd%7D%7D)%7D%7B%5Csum_%7Bj=1%7D%5EN%20%5Cexp(%5Cfrac%7Bq_m%5E%5Ctop%20k_j%7D%7B%5Csqrt%7Bd%7D%7D)%7D"></p>
 <p><img src="https://latex.codecogs.com/png.latex?o_m%20=%20%5Csum_%7Bn=1%7D%5EN%20a_%7Bm,n%7Dv_n"></p>
 <ul>
-<li>In Absolute Positional Embedding method, <img src="https://latex.codecogs.com/png.latex?q%5ET_m"> and <img src="https://latex.codecogs.com/png.latex?k_n"> each encoded individual token positions</li>
+<li>In Absolute Positional Embedding method, <img src="https://latex.codecogs.com/png.latex?q%5ET_m"> and <img src="https://latex.codecogs.com/png.latex?k_n"> each encoded <strong>individual token positions</strong></li>
 <li>Hence, self-attention, (aka <img src="https://latex.codecogs.com/png.latex?q%5ET_mk_n">) led to propagation of information about individual token positions</li>
-<li>We want to move away from that and only incorporate relative position information during the self-attention operation
+<li>We want to move away from that and only incorporate <strong>relative position information</strong> during the self-attention operation
 <ul>
 <li><em>In my understanding</em>, it is because the absolute position is already encoded in the rotation</li>
 </ul></li>
@@ -283,7 +283,7 @@
 <li><img src="https://latex.codecogs.com/png.latex?%5Clangle%20%5Ccdot,%20%5Ccdot%20%5Crangle"> denotes inner-product</li>
 </ul></li>
 </ul>
-<p><img src="https://latex.codecogs.com/png.latex?%5Clangle%20f_q(x_m,%20m),%20f_k(x_n,%20n)%20%5Crangle%20=%20g(x_m,%20x_n,%20m%20-%20n)"></p>
+<p><img src="https://latex.codecogs.com/png.latex?q%5ET_m%20k_n%20=%20%5Clangle%20f_q(x_m,%20m),%20f_k(x_n,%20n)%20%5Crangle%20=%20g(x_m,%20x_n,%20m%20-%20n)"></p>
 <ul>
 <li>Note that <img src="https://latex.codecogs.com/png.latex?g(%5Ccdot)"> does not have any individual position information like <img src="https://latex.codecogs.com/png.latex?g(%5Ccdot,%20m,%20n)"></li>
 </ul>
@@ -299,10 +299,126 @@
 <ul>
 <li>Notice how first, the <strong>Key</strong> and <strong>Query</strong> are generated before rotation</li>
 </ul>
-
-
+</section>
+<section id="solution-for-general-case" class="level4">
+<h4 class="anchored" data-anchor-id="solution-for-general-case">Solution for General Case</h4>
+<ul>
+<li>For any <img src="https://latex.codecogs.com/png.latex?d"> dimensional input embedding, we assume <img src="https://latex.codecogs.com/png.latex?d"> is even and divide the embedding space into <img src="https://latex.codecogs.com/png.latex?d/2"> subspaces</li>
+</ul>
+<p><img src="https://latex.codecogs.com/png.latex?f_%7B%5C%7Bq,k%5C%7D%7D(%5Ctextbf%7Bx%7D_m,%20m)%20=%20%5Ctextbf%7BR%7D_%7B%5CTheta,m%7D%5Ed%20%5Ctextbf%7BW%7D_%7B%5C%7Bq,k%5C%7D%7D%20%5Ctextbf%7Bx%7D_m"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bequation%7D%0A%20%20%20%20R_%7B%5CTheta,m%7D%5Ed%20=%20%5Cbegin%7Bpmatrix%7D%0A%20%20%20%20%20%20%20%20%5Ccos%20m%5Ctheta_1%20&amp;%20-%5Csin%20m%5Ctheta_1%20&amp;%200%20&amp;%200%20&amp;%20%5Ccdots%20&amp;%200%20&amp;%200%20%5C%5C%0A%20%20%20%20%20%20%20%20%5Csin%20m%5Ctheta_1%20&amp;%20%5Ccos%20m%5Ctheta_1%20&amp;%200%20&amp;%200%20&amp;%20%5Ccdots%20&amp;%200%20&amp;%200%20%5C%5C%0A%20%20%20%20%20%20%20%200%20&amp;%200%20&amp;%20%5Ccos%20m%5Ctheta_2%20&amp;%20-%5Csin%20m%5Ctheta_2%20&amp;%20%5Ccdots%20&amp;%200%20&amp;%200%20%5C%5C%0A%20%20%20%20%20%20%20%200%20&amp;%200%20&amp;%20%5Csin%20m%5Ctheta_2%20&amp;%20%5Ccos%20m%5Ctheta_2%20&amp;%20%5Ccdots%20&amp;%200%20&amp;%200%20%5C%5C%0A%20%20%20%20%20%20%20%20%5Cvdots%20&amp;%20%5Cvdots%20&amp;%20%5Cvdots%20&amp;%20%5Cvdots%20&amp;%20%5Cddots%20&amp;%20%5Cvdots%20&amp;%20%5Cvdots%20%5C%5C%0A%20%20%20%20%20%20%20%200%20&amp;%200%20&amp;%200%20&amp;%200%20&amp;%20%5Ccdots%20&amp;%20%5Ccos%20m%5Ctheta_%7Bd/2%7D%20&amp;%20-%5Csin%20m%5Ctheta_%7Bd/2%7D%20%5C%5C%0A%20%20%20%20%20%20%20%200%20&amp;%200%20&amp;%200%20&amp;%200%20&amp;%20%5Ccdots%20&amp;%20%5Csin%20m%5Ctheta_%7Bd/2%7D%20&amp;%20%5Ccos%20m%5Ctheta_%7Bd/2%7D%0A%20%20%20%20%5Cend%7Bpmatrix%7D%0A%5Cend%7Bequation%7D%0A"></p>
+<ul>
+<li>This leads us to the <strong>general form</strong> of self-attention using RoPE</li>
+</ul>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Bequation%7D%0A%20%20%20%20%5Ctextbf%7Bq%7D_m%5E%5Ctop%20%5Ctextbf%7Bk%7D_n%20=%20(%5Ctextbf%7BR%7D_%7B%5CTheta,m%7D%5Ed%20%5Ctextbf%7BW%7D_q%20%5Ctextbf%7Bx%7D_m)%5E%5Ctop%20(%5Ctextbf%7BR%7D_%7B%5CTheta,n%7D%5Ed%20%5Ctextbf%7BW%7D_k%20%5Ctextbf%7Bx%7D_n)%20=%20%5Ctextbf%7Bx%7D_m%5E%5Ctop%20%5Ctextbf%7BW%7D_q%5E%5Ctop%20%5Ctextbf%7BR%7D_%7B%5CTheta,n-m%7D%5Ed%20%5Ctextbf%7BW%7D_k%20%5Ctextbf%7Bx%7D_n%0A%5Cend%7Bequation%7D"></p>
+<ul>
+<li>Notice how RoPE incorporates relative position information in the self-attention step itself instead of adding it through a bias matrix like its precursor</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://adtygan.github.io/posts/media/rope-4.png" class="img-fluid figure-img"></p>
+<figcaption><strong>Implementation of RoPE</strong>, all subspaces within an embedding vector are rotated by same angle</figcaption>
+</figure>
+</div>
 </section>
 </section>
+<section id="properties-of-rope" class="level3">
+<h3 class="anchored" data-anchor-id="properties-of-rope">🍀 Properties of RoPE</h3>
+<section id="flexibly-adapts-to-any-sequence-length" class="level4">
+<h4 class="anchored" data-anchor-id="flexibly-adapts-to-any-sequence-length">Flexibly adapts to any sequence length</h4>
+<ul>
+<li>For any new token, all we need to do is rotate its vector by <img src="https://latex.codecogs.com/png.latex?m%5Ctheta"></li>
+<li>The method is scalable and requires no pre-computation</li>
+</ul>
+</section>
+<section id="decay-of-the-inter-token-dependency" class="level4">
+<h4 class="anchored" data-anchor-id="decay-of-the-inter-token-dependency">Decay of the inter-token dependency</h4>
+<ul>
+<li>Set <img src="https://latex.codecogs.com/png.latex?%5Ctheta_i%20=%201000%5E%7B-2i/d%7D"> following original transformers paper</li>
+<li>This causes inner-product to decay as relative position increases</li>
+</ul>
+<p><img src="https://adtygan.github.io/posts/media/rope-5.png" class="img-fluid"></p>
+<ul>
+<li>Relative upper bound is the <img src="https://latex.codecogs.com/png.latex?%5Ctextbf%7BR%7D_%7B%5CTheta,n-m%7D%5Ed"> term in general form of RoPE: <img src="https://latex.codecogs.com/png.latex?%5Ctextbf%7Bx%7D_m%5E%5Ctop%20%5Ctextbf%7BW%7D_q%5E%5Ctop%20%5Ctextbf%7BR%7D_%7B%5CTheta,n-m%7D%5Ed%20%5Ctextbf%7BW%7D_k%20%5Ctextbf%7Bx%7D_n"></li>
+</ul>
+</section>
+<section id="equips-linear-self-attention-with-relative-position-encoding" class="level4">
+<h4 class="anchored" data-anchor-id="equips-linear-self-attention-with-relative-position-encoding">Equips linear self-attention with relative position encoding</h4>
+<ul>
+<li>Instead of expressing self-attention in the usual way as:</li>
+</ul>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bequation%7D%0A%20%20%20%20%5Ctext%7BAttention%7D(%5Ctextbf%7BQ%7D,%20%5Ctextbf%7BK%7D,%20%5Ctextbf%7BV%7D)_m%20=%20%5Cfrac%7B%5Csum_%7Bn=1%7D%5EN%20%5Ctext%7Bsim%7D(%5Ctextbf%7Bq%7D_m,%20%5Ctextbf%7Bk%7D_n)%20%5Ctextbf%7Bv%7D_n%7D%7B%5Csum_%7Bn=1%7D%5EN%20%5Ctext%7Bsim%7D(%5Ctextbf%7Bq%7D_m,%20%5Ctextbf%7Bk%7D_n)%7D%0A%5Cend%7Bequation%7D%0A"></p>
+<ul>
+<li>Linear-attention expresses it as:</li>
+</ul>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bequation%7D%0A%20%20%20%20%5Ctext%7BAttention%7D(%5Ctextbf%7BQ%7D,%20%5Ctextbf%7BK%7D,%20%5Ctextbf%7BV%7D)_m%20=%20%5Cfrac%7B%5Csum_%7Bn=1%7D%5EN%20%5Cphi(%5Ctextbf%7Bq%7D_m)%5E%5Ctop%20%5Cphi(%5Ctextbf%7Bk%7D_n)%20%5Ctextbf%7Bv%7D_n%7D%7B%5Csum_%7Bn=1%7D%5EN%20%5Cphi(%5Ctextbf%7Bq%7D_m)%5E%5Ctop%20%5Cphi(%5Ctextbf%7Bk%7D_n)%7D%0A%5Cend%7Bequation%7D%0A"></p>
+<ul>
+<li>The authors propose that RoPE can be combined with linear-attention simply by multiplying the rotation matrices</li>
+</ul>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bequation%7D%0A%20%20%20%20%5Ctext%7BAttention%7D(%5Ctextbf%7BQ%7D,%20%5Ctextbf%7BK%7D,%20%5Ctextbf%7BV%7D)_m%20=%20%5Cfrac%7B%5Csum_%7Bn=1%7D%5EN%20(%5Ctextbf%7BR%7D_%7B%5CTheta,m%7D%5Ed%20%5Cphi(%5Ctextbf%7Bq%7D_m))%5E%5Ctop%20(%5Ctextbf%7BR%7D_%7B%5CTheta,n%7D%5Ed%20%5Cphi(%5Ctextbf%7Bk%7D_n))%20%5Ctextbf%7Bv%7D_n%7D%7B%5Csum_%7Bn=1%7D%5EN%20%5Cphi(%5Ctextbf%7Bq%7D_m)%5E%5Ctop%20%5Cphi(%5Ctextbf%7Bk%7D_n)%7D%0A%5Cend%7Bequation%7D%0A"></p>
+</section>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<section id="machine-translation-wmt-2014-english--german-translation" class="level3">
+<h3 class="anchored" data-anchor-id="machine-translation-wmt-2014-english--german-translation">1. Machine Translation: WMT 2014 English -German Translation</h3>
+<ul>
+<li>Evaluate English-to-German translation</li>
+</ul>
+<p><img src="https://adtygan.github.io/posts/media/rope-6.png" class="img-fluid"></p>
+</section>
+<section id="pre-training-language-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="pre-training-language-modeling">2. Pre-training Language Modeling</h3>
+<ul>
+<li>Validate performance in learning contextual representations</li>
+<li><strong>Pre-training dataset</strong>: BookCorpus and Wikipedia Corpus Foundation</li>
+</ul>
+<p><img src="https://adtygan.github.io/posts/media/rope-7.png" class="img-fluid"></p>
+</section>
+<section id="performer-rope-for-pre-training" class="level3">
+<h3 class="anchored" data-anchor-id="performer-rope-for-pre-training">3. Performer + RoPE for Pre-Training</h3>
+<ul>
+<li>Performer uses <strong>linear-attention</strong></li>
+</ul>
+<p><img src="https://adtygan.github.io/posts/media/rope-8.png" class="img-fluid"></p>
+</section>
+<section id="fine-tuning-on-glue-tasks" class="level3">
+<h3 class="anchored" data-anchor-id="fine-tuning-on-glue-tasks">4. Fine-tuning on GLUE tasks</h3>
+<ul>
+<li><strong>GLUE (General Language Understanding Evaluation)</strong>: Benchmark for evaluating performance of natural language understanding (NLU) models across a diverse set of tasks</li>
+</ul>
+<p><img src="https://adtygan.github.io/posts/media/rope-9.png" class="img-fluid"></p>
+</section>
+<section id="handling-long-texts-on-chinese-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="handling-long-texts-on-chinese-datasets">5. Handling long texts on Chinese Datasets</h3>
+<ul>
+<li>Performance <strong>improves</strong> as sequence length increases</li>
+</ul>
+<p><img src="https://adtygan.github.io/posts/media/rope-10.png" class="img-fluid"></p>
+<p><img src="https://adtygan.github.io/posts/media/rope-11.png" class="img-fluid"></p>
+</section>
+<section id="limitations-of-rope" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-of-rope">🟡&nbsp;Limitations of RoPE</h3>
+<ul>
+<li>Unclear why RoPE <strong>converges faster</strong> than other strategies</li>
+<li>Superior performance on long texts cannot be explained convincingly
+<ul>
+<li>Attributed to <strong>long-term decay</strong>, but other strategies have this property as well</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">📋&nbsp;References</h2>
+<ol type="1">
+<li><strong>Jianlin Su, et al.</strong>, <a href="https://arxiv.org/abs/2104.09864">RoFormer: Enhanced Transformer with Rotary Position Embedding</a></li>
+<li><strong>Umar Jamil</strong>, <a href="https://www.youtube.com/watch?v=bCz4OMemCcA">Attention is all you need (Transformer)</a></li>
+<li><strong>Amirhossein Kazemnejad</strong>, <a href="https://kazemnejad.com/blog/transformer_architecture_positional_encoding/">Transformer Architecture: The Positional Encoding</a></li>
+<li><strong>Efficient NLP</strong>, <a href="https://www.youtube.com/watch?v=o29P0Kpobz0">Rotary Positional Embeddings: Combining Absolute and Relative</a></li>
+</ol>
+
+
 </section>
 
  ]]></description>
