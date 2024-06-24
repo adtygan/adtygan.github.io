@@ -193,7 +193,7 @@
 <li><strong>Issues with KV Cache:</strong> For every new token added to sequence, embeddings for all tokens will change, effectively rendering KV Cache impractical</li>
 </ul>
 <table class="table-striped table-hover table">
-<caption>Notice how bias values for each row changed (1 more value added)</caption>
+<caption>Notice how bias values for each <img src="https://latex.codecogs.com/png.latex?Anthony">, <img src="https://latex.codecogs.com/png.latex?Hopkins"> and <img src="https://latex.codecogs.com/png.latex?admired"> changed (1 more column added)</caption>
 <thead>
 <tr class="header">
 <th></th>

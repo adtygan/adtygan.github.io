@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2024-06-24">
-<meta name="description" content="Deep dive into the paper behind the popular RoPE technique">
+<meta name="description" content="Deep dive into the paper behind RoPE">
 
 <title>Aditya Ganesh Kumar - Notes on RoFormer: Enhanced Transformer with Rotary Position Embedding</title>
 <style>
@@ -97,10 +97,10 @@ window.Quarto = {
 
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="Aditya Ganesh Kumar - Notes on RoFormer: Enhanced Transformer with Rotary Position Embedding">
-<meta property="og:description" content="Deep dive into the paper behind the popular RoPE technique">
+<meta property="og:description" content="Deep dive into the paper behind RoPE">
 <meta property="og:site_name" content="Aditya Ganesh Kumar">
 <meta name="twitter:title" content="Aditya Ganesh Kumar - Notes on RoFormer: Enhanced Transformer with Rotary Position Embedding">
-<meta name="twitter:description" content="Deep dive into the paper behind the popular RoPE technique">
+<meta name="twitter:description" content="Deep dive into the paper behind RoPE">
 <meta name="twitter:creator" content="@adtygan">
 <meta name="twitter:card" content="summary">
 </head>
@@ -161,7 +161,7 @@ window.Quarto = {
       <h1 class="title">Notes on <em>RoFormer: Enhanced Transformer with Rotary Position Embedding</em></h1>
                   <div>
         <div class="description">
-          Deep dive into the paper behind the popular RoPE technique
+          Deep dive into the paper behind RoPE
         </div>
       </div>
                           <div class="quarto-categories">
@@ -399,7 +399,7 @@ f_v (\mathbf{x}_n, n) &amp; := \mathbf{W}_v (\mathbf{x}_n + \tilde{\mathbf{p}}_r
 <li><strong>Issues with KV Cache:</strong> For every new token added to sequence, embeddings for all tokens will change, effectively rendering KV Cache impractical</li>
 </ul>
 <table class="table-striped table-hover table">
-<caption>Notice how bias values for each row changed (1 more value added)</caption>
+<caption>Notice how bias values for each <span class="math inline">\(Anthony\)</span>, <span class="math inline">\(Hopkins\)</span> and <span class="math inline">\(admired\)</span> changed (1 more column added)</caption>
 <thead>
 <tr class="header">
 <th></th>
