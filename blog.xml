@@ -167,7 +167,7 @@
 <p><img src="https://latex.codecogs.com/png.latex?Final%20Attention%20Matrix%20=%20Attention%20Matrix%20+%20Offset%20Matrix"></p>
 <section id="formulation-1" class="level3">
 <h3 class="anchored" data-anchor-id="formulation-1">📝&nbsp;Formulation</h3>
-<p>Formualtion for Absolute Position Embedding:</p>
+<p>Formulation for Absolute Position Embedding:</p>
 <p><img src="https://latex.codecogs.com/png.latex?f_%7Bt%20:%20t%20%5Cin%20%5C%7Bq,%20k,%20v%5C%7D%7D%20%5Cleft(%20%5Cmathbf%7Bx%7D_i,%20i%20%5Cright)%20:=%20%5C%5C%0A%5Cmathbf%7BW%7D_%7Bt%20:%20t%20%5Cin%20%5C%7Bq,%20k,%20v%5C%7D%7D%20%5Cleft(%20%5Cmathbf%7Bx%7D_i%20+%20%5Cmathbf%7Bp%7D_i%20%5Cright)"></p>
 <p>Formulation expected for Relative Position Embedding:</p>
 <p><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0Af_q%20(%5Cmathbf%7Bx%7D_m)%20&amp;%20:=%20%5Cmathbf%7BW%7D_q%20%5Cmathbf%7Bx%7D_m%20%5C%5C%0Af_k%20(%5Cmathbf%7Bx%7D_n,%20n)%20&amp;%20:=%20%5Cmathbf%7BW%7D_k%20(%5Cmathbf%7Bx%7D_n%20+%20%5Ctilde%7B%5Cmathbf%7Bp%7D%7D_r%5Ek)%20%5C%5C%0Af_v%20(%5Cmathbf%7Bx%7D_n,%20n)%20&amp;%20:=%20%5Cmathbf%7BW%7D_v%20(%5Cmathbf%7Bx%7D_n%20+%20%5Ctilde%7B%5Cmathbf%7Bp%7D%7D_r%5Ev)%0A%5Cend%7Baligned%7D%0A"></p>
