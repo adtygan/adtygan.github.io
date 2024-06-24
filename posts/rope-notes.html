@@ -205,6 +205,10 @@ window.Quarto = {
   <li><a href="#formulation-1" id="toc-formulation-1" class="nav-link" data-scroll-target="#formulation-1">📝&nbsp;Formulation</a></li>
   <li><a href="#limitations-1" id="toc-limitations-1" class="nav-link" data-scroll-target="#limitations-1">🟡&nbsp;Limitations</a></li>
   </ul></li>
+  <li><a href="#enter-rotational-positional-embedding" id="toc-enter-rotational-positional-embedding" class="nav-link" data-scroll-target="#enter-rotational-positional-embedding">🧵&nbsp;Enter Rotational Positional Embedding 🧵</a>
+  <ul class="collapse">
+  <li><a href="#formulation-2" id="toc-formulation-2" class="nav-link" data-scroll-target="#formulation-2">📝&nbsp;Formulation</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/adtygan/adtygan.github.io/edit/master/posts/rope-notes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/adtygan/adtygan.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -399,7 +403,7 @@ f_v (\mathbf{x}_n, n) &amp; := \mathbf{W}_v (\mathbf{x}_n + \tilde{\mathbf{p}}_r
 <li><strong>Issues with KV Cache:</strong> For every new token added to sequence, embeddings for all tokens will change, effectively rendering KV Cache impractical</li>
 </ul>
 <table class="table-striped table-hover table">
-<caption>Notice how bias values for each <span class="math inline">\(Anthony\)</span>, <span class="math inline">\(Hopkins\)</span> and <span class="math inline">\(admired\)</span> changed (1 more column added)</caption>
+<caption>Notice how bias values for <span class="math inline">\(Anthony\)</span>, <span class="math inline">\(Hopkins\)</span> and <span class="math inline">\(admired\)</span> changed (1 more column added)</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -440,8 +444,85 @@ f_v (\mathbf{x}_n, n) &amp; := \mathbf{W}_v (\mathbf{x}_n + \tilde{\mathbf{p}}_r
 </tr>
 </tbody>
 </table>
+</section>
+</section>
+<section id="enter-rotational-positional-embedding" class="level2">
+<h2 class="anchored" data-anchor-id="enter-rotational-positional-embedding">🧵&nbsp;Enter Rotational Positional Embedding 🧵</h2>
+<ul>
+<li>Instead of adding position embeddings to token embeddings, <strong>rotate the token embeddings</strong> based on its position in the sequence</li>
+<li>This solves the limitations of its precursors</li>
+<li>✅&nbsp;<strong>Solves the issue with KV Cache</strong></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/rope-1.png" class="img-fluid figure-img"></p>
+<figcaption>Source: <strong>Efficient NLP</strong>, <a href="https://www.youtube.com/watch?v=o29P0Kpobz0">Rotary Positional Embeddings: Combining Absolute and Relative</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>✅&nbsp;Notion of relative distance is preserved across rotations</li>
+</ul>
+<p><img src="media/rope-2.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/rope-3.png" class="img-fluid figure-img"></p>
+<figcaption>Source: <strong>Efficient NLP</strong>, <a href="https://www.youtube.com/watch?v=o29P0Kpobz0">Rotary Positional Embeddings: Combining Absolute and Relative</a></figcaption>
+</figure>
+</div>
+<section id="formulation-2" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-2">📝&nbsp;Formulation</h3>
+<ul>
+<li>Remember:</li>
+</ul>
+<p><span class="math display">\[q_m = f_q(x_m, m)\]</span></p>
+<p><span class="math display">\[k_n = f_k(x_n, n)\]</span></p>
+<p><span class="math display">\[v_n = f_v(x_n, n)\]</span></p>
+<p><span class="math display">\[a_{m,n} = \frac{\exp(\frac{q_m^\top k_n}{\sqrt{d}})}{\sum_{j=1}^N \exp(\frac{q_m^\top k_j}{\sqrt{d}})}\]</span></p>
+<p><span class="math display">\[o_m = \sum_{n=1}^N a_{m,n}v_n\]</span></p>
+<ul>
+<li>In Absolute Positional Embedding method, <span class="math inline">\(q^T_m\)</span> and <span class="math inline">\(k_n\)</span> each encoded individual token positions</li>
+<li>Hence, self-attention, (aka <span class="math inline">\(q^T_mk_n\)</span>) led to propagation of information about individual token positions</li>
+<li>We want to move away from that and only incorporate relative position information during the self-attention operation
+<ul>
+<li><em>In my understanding</em>, it is because the absolute position is already encoded in the rotation</li>
+</ul></li>
+<li>In other words, we want the below to happen
+<ul>
+<li><span class="math inline">\(q_m = f_q(x_m, m)\)</span></li>
+<li><span class="math inline">\(k_n = f_k(x_n, n)\)</span></li>
+<li><span class="math inline">\(\langle \cdot, \cdot \rangle\)</span> denotes inner-product</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[\langle f_q(x_m, m), f_k(x_n, n) \rangle = g(x_m, x_n, m - n)\]</span></p>
+<ul>
+<li>Note that <span class="math inline">\(g(\cdot)\)</span> does not have any individual position information like <span class="math inline">\(g(\cdot, m, n)\)</span></li>
+</ul>
+<section id="solution-for-2d-case" class="level4">
+<h4 class="anchored" data-anchor-id="solution-for-2d-case">Solution for 2D Case</h4>
+<ul>
+<li>The authors prove that, for the case of 2D vectors, the solution to the above problem is:</li>
+</ul>
+<p><span class="math display">\[f_q(\mathbf{x}_m, m) = (\mathbf{W}_q \mathbf{x}_m) e^{im\theta}\]</span></p>
+<p><span class="math display">\[f_k(\mathbf{x}_n, n) = (\mathbf{W}_k \mathbf{x}_n) e^{in\theta}\]</span></p>
+<p><span class="math display">\[g(\mathbf{x}_m, \mathbf{x}_n, m - n) = \text{Re}[(\mathbf{W}_q \mathbf{x}_m)(\mathbf{W}_k \mathbf{x}_n)^* e^{i(m-n)\theta}]\]</span></p>
+<p><span class="math display">\[f_{\{q,k\}}(x_m, m) = \begin{pmatrix}
+    \cos m\theta &amp; -\sin m\theta \\
+    \sin m\theta &amp; \cos m\theta
+\end{pmatrix}
+\begin{pmatrix}
+    W_{\{q,k\}}^{(11)} &amp; W_{\{q,k\}}^{(12)} \\
+    W_{\{q,k\}}^{(21)} &amp; W_{\{q,k\}}^{(22)}
+\end{pmatrix}
+\begin{pmatrix}
+    x_m^{(1)} \\
+    x_m^{(2)}
+\end{pmatrix}\]</span></p>
+<ul>
+<li>Notice how first, the <strong>Key</strong> and <strong>Query</strong> are generated before rotation</li>
+</ul>
 
 
+</section>
 </section>
 </section>
 

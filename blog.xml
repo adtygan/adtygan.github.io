@@ -193,7 +193,7 @@
 <li><strong>Issues with KV Cache:</strong> For every new token added to sequence, embeddings for all tokens will change, effectively rendering KV Cache impractical</li>
 </ul>
 <table class="table-striped table-hover table">
-<caption>Notice how bias values for each <img src="https://latex.codecogs.com/png.latex?Anthony">, <img src="https://latex.codecogs.com/png.latex?Hopkins"> and <img src="https://latex.codecogs.com/png.latex?admired"> changed (1 more column added)</caption>
+<caption>Notice how bias values for <img src="https://latex.codecogs.com/png.latex?Anthony">, <img src="https://latex.codecogs.com/png.latex?Hopkins"> and <img src="https://latex.codecogs.com/png.latex?admired"> changed (1 more column added)</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -234,8 +234,74 @@
 </tr>
 </tbody>
 </table>
+</section>
+</section>
+<section id="enter-rotational-positional-embedding" class="level2">
+<h2 class="anchored" data-anchor-id="enter-rotational-positional-embedding">🧵&nbsp;Enter Rotational Positional Embedding 🧵</h2>
+<ul>
+<li>Instead of adding position embeddings to token embeddings, <strong>rotate the token embeddings</strong> based on its position in the sequence</li>
+<li>This solves the limitations of its precursors</li>
+<li>✅&nbsp;<strong>Solves the issue with KV Cache</strong></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://adtygan.github.io/posts/media/rope-1.png" class="img-fluid figure-img"></p>
+<figcaption>Source: <strong>Efficient NLP</strong>, <a href="https://www.youtube.com/watch?v=o29P0Kpobz0">Rotary Positional Embeddings: Combining Absolute and Relative</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>✅&nbsp;Notion of relative distance is preserved across rotations</li>
+</ul>
+<p><img src="https://adtygan.github.io/posts/media/rope-2.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://adtygan.github.io/posts/media/rope-3.png" class="img-fluid figure-img"></p>
+<figcaption>Source: <strong>Efficient NLP</strong>, <a href="https://www.youtube.com/watch?v=o29P0Kpobz0">Rotary Positional Embeddings: Combining Absolute and Relative</a></figcaption>
+</figure>
+</div>
+<section id="formulation-2" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-2">📝&nbsp;Formulation</h3>
+<ul>
+<li>Remember:</li>
+</ul>
+<p><img src="https://latex.codecogs.com/png.latex?q_m%20=%20f_q(x_m,%20m)"></p>
+<p><img src="https://latex.codecogs.com/png.latex?k_n%20=%20f_k(x_n,%20n)"></p>
+<p><img src="https://latex.codecogs.com/png.latex?v_n%20=%20f_v(x_n,%20n)"></p>
+<p><img src="https://latex.codecogs.com/png.latex?a_%7Bm,n%7D%20=%20%5Cfrac%7B%5Cexp(%5Cfrac%7Bq_m%5E%5Ctop%20k_n%7D%7B%5Csqrt%7Bd%7D%7D)%7D%7B%5Csum_%7Bj=1%7D%5EN%20%5Cexp(%5Cfrac%7Bq_m%5E%5Ctop%20k_j%7D%7B%5Csqrt%7Bd%7D%7D)%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?o_m%20=%20%5Csum_%7Bn=1%7D%5EN%20a_%7Bm,n%7Dv_n"></p>
+<ul>
+<li>In Absolute Positional Embedding method, <img src="https://latex.codecogs.com/png.latex?q%5ET_m"> and <img src="https://latex.codecogs.com/png.latex?k_n"> each encoded individual token positions</li>
+<li>Hence, self-attention, (aka <img src="https://latex.codecogs.com/png.latex?q%5ET_mk_n">) led to propagation of information about individual token positions</li>
+<li>We want to move away from that and only incorporate relative position information during the self-attention operation
+<ul>
+<li><em>In my understanding</em>, it is because the absolute position is already encoded in the rotation</li>
+</ul></li>
+<li>In other words, we want the below to happen
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?q_m%20=%20f_q(x_m,%20m)"></li>
+<li><img src="https://latex.codecogs.com/png.latex?k_n%20=%20f_k(x_n,%20n)"></li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Clangle%20%5Ccdot,%20%5Ccdot%20%5Crangle"> denotes inner-product</li>
+</ul></li>
+</ul>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clangle%20f_q(x_m,%20m),%20f_k(x_n,%20n)%20%5Crangle%20=%20g(x_m,%20x_n,%20m%20-%20n)"></p>
+<ul>
+<li>Note that <img src="https://latex.codecogs.com/png.latex?g(%5Ccdot)"> does not have any individual position information like <img src="https://latex.codecogs.com/png.latex?g(%5Ccdot,%20m,%20n)"></li>
+</ul>
+<section id="solution-for-2d-case" class="level4">
+<h4 class="anchored" data-anchor-id="solution-for-2d-case">Solution for 2D Case</h4>
+<ul>
+<li>The authors prove that, for the case of 2D vectors, the solution to the above problem is:</li>
+</ul>
+<p><img src="https://latex.codecogs.com/png.latex?f_q(%5Cmathbf%7Bx%7D_m,%20m)%20=%20(%5Cmathbf%7BW%7D_q%20%5Cmathbf%7Bx%7D_m)%20e%5E%7Bim%5Ctheta%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?f_k(%5Cmathbf%7Bx%7D_n,%20n)%20=%20(%5Cmathbf%7BW%7D_k%20%5Cmathbf%7Bx%7D_n)%20e%5E%7Bin%5Ctheta%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?g(%5Cmathbf%7Bx%7D_m,%20%5Cmathbf%7Bx%7D_n,%20m%20-%20n)%20=%20%5Ctext%7BRe%7D%5B(%5Cmathbf%7BW%7D_q%20%5Cmathbf%7Bx%7D_m)(%5Cmathbf%7BW%7D_k%20%5Cmathbf%7Bx%7D_n)%5E*%20e%5E%7Bi(m-n)%5Ctheta%7D%5D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?f_%7B%5C%7Bq,k%5C%7D%7D(x_m,%20m)%20=%20%5Cbegin%7Bpmatrix%7D%0A%20%20%20%20%5Ccos%20m%5Ctheta%20&amp;%20-%5Csin%20m%5Ctheta%20%5C%5C%0A%20%20%20%20%5Csin%20m%5Ctheta%20&amp;%20%5Ccos%20m%5Ctheta%0A%5Cend%7Bpmatrix%7D%0A%5Cbegin%7Bpmatrix%7D%0A%20%20%20%20W_%7B%5C%7Bq,k%5C%7D%7D%5E%7B(11)%7D%20&amp;%20W_%7B%5C%7Bq,k%5C%7D%7D%5E%7B(12)%7D%20%5C%5C%0A%20%20%20%20W_%7B%5C%7Bq,k%5C%7D%7D%5E%7B(21)%7D%20&amp;%20W_%7B%5C%7Bq,k%5C%7D%7D%5E%7B(22)%7D%0A%5Cend%7Bpmatrix%7D%0A%5Cbegin%7Bpmatrix%7D%0A%20%20%20%20x_m%5E%7B(1)%7D%20%5C%5C%0A%20%20%20%20x_m%5E%7B(2)%7D%0A%5Cend%7Bpmatrix%7D"></p>
+<ul>
+<li>Notice how first, the <strong>Key</strong> and <strong>Query</strong> are generated before rotation</li>
+</ul>
 
 
+</section>
 </section>
 </section>
 
