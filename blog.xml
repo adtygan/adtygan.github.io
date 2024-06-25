@@ -44,6 +44,8 @@
 <li>Important because self-attention is position invariant</li>
 </ul></li>
 <li>Represent the above in a manner that model can understand</li>
+<li>PE values are only computed once and reused for&nbsp;<strong>every sentence</strong>&nbsp;during both training and inference</li>
+<li>All we have to do is add these PE values with input embeddings, which change for every sentence</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -77,25 +79,13 @@
 <ul>
 <li><img src="https://latex.codecogs.com/png.latex?PE(1,3)"> pertains to the <strong>second token in the sentence</strong> and the <strong>fourth value of the token embedding</strong></li>
 <li>Hence we use, <img src="https://latex.codecogs.com/png.latex?pos=1">, <img src="https://latex.codecogs.com/png.latex?2i=2"> and <img src="https://latex.codecogs.com/png.latex?cos"></li>
-<li><img src="https://latex.codecogs.com/png.latex?i%20%5Cin%20%5B0,%20d_%7Bmodel%7D/2%20-1%5D">&nbsp;(<em>Note&nbsp;<img src="https://latex.codecogs.com/png.latex?d_%7Bmodel%7D">&nbsp;is always kept as an even number</em>)
-<ul>
-<li>if <img src="https://latex.codecogs.com/png.latex?d_%7Bmodel%7D%20=%206"> , <img src="https://latex.codecogs.com/png.latex?i%20%5Cin%20%5B0,6/2%20-%201%5D%20=%3E%20i%20%5Cin%20%5B0,2%5D"></li>
-</ul></li>
-<li>This produces 6 values for the second index
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?%5B(2*0),%20(2*0+1),%20(2*1),%20(2*1+1),%20(2*2),%20(2*2+1)%5D"></li>
-</ul></li>
 </ul>
 </div>
 </div>
 </div>
-<ul>
-<li>PE values are only computed once and reused for&nbsp;<strong>every sentence</strong>&nbsp;during both training and inference</li>
-<li>All we have to do is add these PE values with input embeddings, which change for every sentence</li>
-</ul>
 </section>
-<section id="visual-intuition-of-why-it-works" class="level3">
-<h3 class="anchored" data-anchor-id="visual-intuition-of-why-it-works">🖼️&nbsp;Visual Intuition of Why it Works</h3>
+<section id="visual-intuition" class="level3">
+<h3 class="anchored" data-anchor-id="visual-intuition">🖼️&nbsp;Visual Intuition</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://adtygan.github.io/posts/media/abs-pe-3.png" class="img-fluid figure-img"></p>
@@ -110,7 +100,7 @@
 <section id="limitations" class="level3">
 <h3 class="anchored" data-anchor-id="limitations">🟡 Limitations</h3>
 <ul>
-<li><strong>Sequence Length Bottleneck:</strong> We cannot represent PE values (<em>and thereby, distance</em>) beyond the sequence length we set (<em>128 in the above diagram</em>)</li>
+<li><strong>Sequence Length Bottleneck:</strong> We cannot represent PE values (<em>and thereby, distance</em>) beyond the sequence length we set (<em>50 in the above diagram</em>)</li>
 <li><strong>Lack of Relative Positions:</strong> PE values are computed independently, hence, model treats <ins>pos 1 vs pos 2</ins> the same way as <ins>pos 2 vs pos 100</ins></li>
 </ul>
 </section>
@@ -236,12 +226,12 @@
 </table>
 </section>
 </section>
-<section id="enter-rotational-positional-embedding" class="level2">
-<h2 class="anchored" data-anchor-id="enter-rotational-positional-embedding">🧵&nbsp;Enter Rotational Positional Embedding 🧵</h2>
+<section id="enter-rotary-positional-embedding" class="level2">
+<h2 class="anchored" data-anchor-id="enter-rotary-positional-embedding">🧵&nbsp;Enter Rotary Positional Embedding 🧵</h2>
 <ul>
 <li>Instead of adding position embeddings to token embeddings, <strong>rotate the token embeddings</strong> based on its position in the sequence</li>
 <li>This solves the limitations of its precursors</li>
-<li>✅&nbsp;<strong>Solves the issue with KV Cache</strong></li>
+<li>✅&nbsp;<strong>Solves the issue with KV Cache</strong> because we no longer compute a separate bias matrix</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -374,21 +364,36 @@
 <li>Validate performance in learning contextual representations</li>
 <li><strong>Pre-training dataset</strong>: BookCorpus and Wikipedia Corpus Foundation</li>
 </ul>
-<p><img src="https://adtygan.github.io/posts/media/rope-7.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://adtygan.github.io/posts/media/rope-7.png" class="img-fluid figure-img"></p>
+<figcaption>MLM Loss - Masked Language Model Loss, (Cross-Entropy Loss)</figcaption>
+</figure>
+</div>
 </section>
 <section id="performer-rope-for-pre-training" class="level3">
-<h3 class="anchored" data-anchor-id="performer-rope-for-pre-training">3. Performer + RoPE for Pre-Training</h3>
+<h3 class="anchored" data-anchor-id="performer-rope-for-pre-training">3. PerFormer + RoPE for Pre-Training</h3>
 <ul>
-<li>Performer uses <strong>linear-attention</strong></li>
+<li>PerFormer uses <strong>linear-attention</strong></li>
 </ul>
-<p><img src="https://adtygan.github.io/posts/media/rope-8.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://adtygan.github.io/posts/media/rope-8.png" class="img-fluid figure-img"></p>
+<figcaption>LM Loss - Language Model Loss, (Cross-Entropy Loss)</figcaption>
+</figure>
+</div>
 </section>
 <section id="fine-tuning-on-glue-tasks" class="level3">
 <h3 class="anchored" data-anchor-id="fine-tuning-on-glue-tasks">4. Fine-tuning on GLUE tasks</h3>
 <ul>
 <li><strong>GLUE (General Language Understanding Evaluation)</strong>: Benchmark for evaluating performance of natural language understanding (NLU) models across a diverse set of tasks</li>
 </ul>
-<p><img src="https://adtygan.github.io/posts/media/rope-9.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://adtygan.github.io/posts/media/rope-9.png" class="img-fluid figure-img"></p>
+<figcaption>Each dataset uses different metric(s), hence, scores are averaged to a final score</figcaption>
+</figure>
+</div>
 </section>
 <section id="handling-long-texts-on-chinese-datasets" class="level3">
 <h3 class="anchored" data-anchor-id="handling-long-texts-on-chinese-datasets">5. Handling long texts on Chinese Datasets</h3>
