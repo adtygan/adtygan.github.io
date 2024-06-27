@@ -227,7 +227,7 @@
 </section>
 </section>
 <section id="enter-rotary-positional-embedding" class="level2">
-<h2 class="anchored" data-anchor-id="enter-rotary-positional-embedding">🧵&nbsp;Enter Rotary Positional Embedding 🧵</h2>
+<h2 class="anchored" data-anchor-id="enter-rotary-positional-embedding">🧵&nbsp;Enter Rotary Positional Embedding</h2>
 <ul>
 <li>Instead of adding position embeddings to token embeddings, <strong>rotate the token embeddings</strong> based on its position in the sequence</li>
 <li>This solves the limitations of its precursors</li>
@@ -413,6 +413,33 @@
 </ul></li>
 </ul>
 </section>
+</section>
+<section id="rope-scaling" class="level2">
+<h2 class="anchored" data-anchor-id="rope-scaling">RoPE Scaling</h2>
+<ul>
+<li>RoPE has seen widespread adoption in modern architectures like Gemma, PaLM, LLaMA</li>
+<li>One exciting reason is <strong>RoPE Scaling</strong></li>
+<li><strong>Main Idea</strong>: Modify the base value (<em>10,000 by default</em>) to allow model to handle longer sequences</li>
+<li>Base value is scaled using <code>rope_factor</code>
+<ul>
+<li><code>rope_factor = 2</code> doubles context length</li>
+<li>Finding optimal base value depends on task, architecture and requires experimentation</li>
+</ul></li>
+<li>Idea discussed better in <a href="https://arxiv.org/abs/2310.05209"><strong>Xiaoran Liu, et al.</strong>, Scaling Laws of RoPE-based Extrapolation</a></li>
+<li>Just by scaling base value, RoPE can be used for longer sequences, but performance degrades
+<ul>
+<li>(e.g.) Going from <strong>4k to 32k</strong> <strong>without finetuning</strong> has been done</li>
+</ul></li>
+<li>Finetuning post scaling helps tackle this issue</li>
+<li>Another idea is to progressively scale and finetune to drastically improve context length</li>
+<li>✨✨Scaling from <strong>8k to 2048k</strong> <strong>with finetuning</strong> has been achieved</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://adtygan.github.io/posts/media/rope-13.png" class="img-fluid figure-img"></p>
+<figcaption>Source: <a href="https://arxiv.org/abs/2310.05209"><strong>Yiran Ding, et al.</strong>, LongRoPE: Extending LLM Context Window Beyond 2 Million Tokens</a></figcaption>
+</figure>
+</div>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">📋&nbsp;References</h2>

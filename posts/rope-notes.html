@@ -205,7 +205,7 @@ window.Quarto = {
   <li><a href="#formulation-1" id="toc-formulation-1" class="nav-link" data-scroll-target="#formulation-1">📝&nbsp;Formulation</a></li>
   <li><a href="#limitations-1" id="toc-limitations-1" class="nav-link" data-scroll-target="#limitations-1">🟡&nbsp;Limitations</a></li>
   </ul></li>
-  <li><a href="#enter-rotary-positional-embedding" id="toc-enter-rotary-positional-embedding" class="nav-link" data-scroll-target="#enter-rotary-positional-embedding">🧵&nbsp;Enter Rotary Positional Embedding 🧵</a>
+  <li><a href="#enter-rotary-positional-embedding" id="toc-enter-rotary-positional-embedding" class="nav-link" data-scroll-target="#enter-rotary-positional-embedding">🧵&nbsp;Enter Rotary Positional Embedding</a>
   <ul class="collapse">
   <li><a href="#formulation-2" id="toc-formulation-2" class="nav-link" data-scroll-target="#formulation-2">📝&nbsp;Formulation</a></li>
   <li><a href="#properties-of-rope" id="toc-properties-of-rope" class="nav-link" data-scroll-target="#properties-of-rope">🍀 Properties of RoPE</a></li>
@@ -219,6 +219,7 @@ window.Quarto = {
   <li><a href="#handling-long-texts-on-chinese-datasets" id="toc-handling-long-texts-on-chinese-datasets" class="nav-link" data-scroll-target="#handling-long-texts-on-chinese-datasets">5. Handling long texts on Chinese Datasets</a></li>
   <li><a href="#limitations-of-rope" id="toc-limitations-of-rope" class="nav-link" data-scroll-target="#limitations-of-rope">🟡&nbsp;Limitations of RoPE</a></li>
   </ul></li>
+  <li><a href="#rope-scaling" id="toc-rope-scaling" class="nav-link" data-scroll-target="#rope-scaling">RoPE Scaling</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">📋&nbsp;References</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/adtygan/adtygan.github.io/edit/master/posts/rope-notes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/adtygan/adtygan.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -448,7 +449,7 @@ f_v (\mathbf{x}_n, n) &amp; := \mathbf{W}_v (\mathbf{x}_n + \tilde{\mathbf{p}}_r
 </section>
 </section>
 <section id="enter-rotary-positional-embedding" class="level2">
-<h2 class="anchored" data-anchor-id="enter-rotary-positional-embedding">🧵&nbsp;Enter Rotary Positional Embedding 🧵</h2>
+<h2 class="anchored" data-anchor-id="enter-rotary-positional-embedding">🧵&nbsp;Enter Rotary Positional Embedding</h2>
 <ul>
 <li>Instead of adding position embeddings to token embeddings, <strong>rotate the token embeddings</strong> based on its position in the sequence</li>
 <li>This solves the limitations of its precursors</li>
@@ -671,6 +672,33 @@ f_v (\mathbf{x}_n, n) &amp; := \mathbf{W}_v (\mathbf{x}_n + \tilde{\mathbf{p}}_r
 </ul></li>
 </ul>
 </section>
+</section>
+<section id="rope-scaling" class="level2">
+<h2 class="anchored" data-anchor-id="rope-scaling">RoPE Scaling</h2>
+<ul>
+<li>RoPE has seen widespread adoption in modern architectures like Gemma, PaLM, LLaMA</li>
+<li>One exciting reason is <strong>RoPE Scaling</strong></li>
+<li><strong>Main Idea</strong>: Modify the base value (<em>10,000 by default</em>) to allow model to handle longer sequences</li>
+<li>Base value is scaled using <code>rope_factor</code>
+<ul>
+<li><code>rope_factor = 2</code> doubles context length</li>
+<li>Finding optimal base value depends on task, architecture and requires experimentation</li>
+</ul></li>
+<li>Idea discussed better in <a href="https://arxiv.org/abs/2310.05209"><strong>Xiaoran Liu, et al.</strong>, Scaling Laws of RoPE-based Extrapolation</a></li>
+<li>Just by scaling base value, RoPE can be used for longer sequences, but performance degrades
+<ul>
+<li>(e.g.) Going from <strong>4k to 32k</strong> <strong>without finetuning</strong> has been done</li>
+</ul></li>
+<li>Finetuning post scaling helps tackle this issue</li>
+<li>Another idea is to progressively scale and finetune to drastically improve context length</li>
+<li>✨✨Scaling from <strong>8k to 2048k</strong> <strong>with finetuning</strong> has been achieved</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/rope-13.png" class="img-fluid figure-img"></p>
+<figcaption>Source: <a href="https://arxiv.org/abs/2310.05209"><strong>Yiran Ding, et al.</strong>, LongRoPE: Extending LLM Context Window Beyond 2 Million Tokens</a></figcaption>
+</figure>
+</div>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">📋&nbsp;References</h2>
