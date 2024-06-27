@@ -413,7 +413,7 @@
 <section id="rope-scaling" class="level2">
 <h2 class="anchored" data-anchor-id="rope-scaling">RoPE Scaling</h2>
 <ul>
-<li>RoPE has seen widespread adoption in modern architectures like Gemma, PaLM, LLaMA</li>
+<li>RoPE has seen widespread adoption in modern architectures like LLaMA and Gemma</li>
 <li>One exciting reason is <strong>RoPE Scaling</strong></li>
 <li><strong>Main Idea</strong>: Modify the base value (<em>10,000 by default</em>) to allow model to handle longer sequences</li>
 <li>Base value is scaled using <code>rope_factor</code>
