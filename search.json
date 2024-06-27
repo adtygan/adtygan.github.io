@@ -81,7 +81,7 @@
     "href": "posts/rope-notes.html#references",
     "title": "Notes on RoFormer: Enhanced Transformer with Rotary Position Embedding",
     "section": "📋 References",
-    "text": "📋 References\n\nJianlin Su, et al., RoFormer: Enhanced Transformer with Rotary Position Embedding\nUmar Jamil, Attention is all you need (Transformer)\nAmirhossein Kazemnejad, Transformer Architecture: The Positional Encoding\nEfficient NLP, Rotary Positional Embeddings: Combining Absolute and Relative"
+    "text": "📋 References\n\nJianlin Su, et al., RoFormer: Enhanced Transformer with Rotary Position Embedding\nUmar Jamil, Attention is all you need (Transformer)\nAmirhossein Kazemnejad, Transformer Architecture: The Positional Encoding\nEfficient NLP, Rotary Positional Embeddings: Combining Absolute and Relative\nXiaoran Liu, et al., Scaling Laws of RoPE-based Extrapolation\nYiran Ding, et al., LongRoPE: Extending LLM Context Window Beyond 2 Million Tokens"
   },
   {
     "objectID": "posts/fswatch.html#context",
