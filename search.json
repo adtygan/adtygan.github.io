@@ -116,7 +116,7 @@
     "href": "posts/swarms-business-agent.html",
     "title": "Building Business Analyst Agents using Swarms",
     "section": "",
-    "text": "Solving a business problem often involves preparing a Business Case Report. This report comprehensively analyzes the problem, evaluates potential solutions, and provides evidence-based recommendations and an implementation plan to effectively address the issue and drive business value. While the process of preparing one requires an experienced business analyst, the workflow can be augmented using AI agents. Two candidates stick out as areas to work on:\nIn this blog, we will explore how Swarms agents can be used to tackle a busuiness problem by outlining the solution, conducting background research and generating a preliminary report.\nBefore we proceed, this blog uses 3 API tools. Please obtain the following keys and store them in a .env file in the same folder as this file."
+    "text": "Solving a business problem often involves preparing a Business Case Report. This report comprehensively analyzes the problem, evaluates potential solutions, and provides evidence-based recommendations and an implementation plan to effectively address the issue and drive business value. While the process of preparing one requires an experienced business analyst, the workflow can be augmented using AI agents. Two candidates stick out as areas to work on:\nIn this blog, we will explore how Swarms agents can be used to tackle a busuiness problem by outlining the solution, conducting background research and generating a preliminary report."
   },
   {
     "objectID": "posts/swarms-business-agent.html#final-generated-report",
