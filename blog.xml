@@ -323,10 +323,6 @@
 </section>
 <section id="decay-of-the-inter-token-dependency" class="level4">
 <h4 class="anchored" data-anchor-id="decay-of-the-inter-token-dependency">Decay of the inter-token dependency</h4>
-<ul>
-<li>Set <img src="https://latex.codecogs.com/png.latex?%5Ctheta_i%20=%201000%5E%7B-2i/d%7D"> following original transformers paper</li>
-<li>This causes inner-product to decay as relative position increases</li>
-</ul>
 <p><img src="https://adtygan.github.io/posts/media/rope-5.png" class="img-fluid"></p>
 <ul>
 <li>Relative upper bound is the <img src="https://latex.codecogs.com/png.latex?%5Ctextbf%7BR%7D_%7B%5CTheta,n-m%7D%5Ed"> term in general form of RoPE: <img src="https://latex.codecogs.com/png.latex?%5Ctextbf%7Bx%7D_m%5E%5Ctop%20%5Ctextbf%7BW%7D_q%5E%5Ctop%20%5Ctextbf%7BR%7D_%7B%5CTheta,n-m%7D%5Ed%20%5Ctextbf%7BW%7D_k%20%5Ctextbf%7Bx%7D_n"></li>
@@ -400,7 +396,7 @@
 <ul>
 <li>Performance <strong>improves</strong> as sequence length increases</li>
 </ul>
-<p><img src="https://adtygan.github.io/posts/media/rope-10.png" class="img-fluid"></p>
+<!-- ![](media/rope-10.png) -->
 <p><img src="https://adtygan.github.io/posts/media/rope-11.png" class="img-fluid"></p>
 </section>
 <section id="limitations-of-rope" class="level3">

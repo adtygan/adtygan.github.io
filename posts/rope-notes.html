@@ -570,10 +570,6 @@ f_v (\mathbf{x}_n, n) &amp; := \mathbf{W}_v (\mathbf{x}_n + \tilde{\mathbf{p}}_r
 </section>
 <section id="decay-of-the-inter-token-dependency" class="level4">
 <h4 class="anchored" data-anchor-id="decay-of-the-inter-token-dependency">Decay of the inter-token dependency</h4>
-<ul>
-<li>Set <span class="math inline">\(\theta_i = 1000^{-2i/d}\)</span> following original transformers paper</li>
-<li>This causes inner-product to decay as relative position increases</li>
-</ul>
 <p><img src="media/rope-5.png" class="img-fluid"></p>
 <ul>
 <li>Relative upper bound is the <span class="math inline">\(\textbf{R}_{\Theta,n-m}^d\)</span> term in general form of RoPE: <span class="math inline">\(\textbf{x}_m^\top \textbf{W}_q^\top \textbf{R}_{\Theta,n-m}^d \textbf{W}_k \textbf{x}_n\)</span></li>
@@ -659,7 +655,7 @@ f_v (\mathbf{x}_n, n) &amp; := \mathbf{W}_v (\mathbf{x}_n + \tilde{\mathbf{p}}_r
 <ul>
 <li>Performance <strong>improves</strong> as sequence length increases</li>
 </ul>
-<p><img src="media/rope-10.png" class="img-fluid"></p>
+<!-- ![](media/rope-10.png) -->
 <p><img src="media/rope-11.png" class="img-fluid"></p>
 </section>
 <section id="limitations-of-rope" class="level3">
