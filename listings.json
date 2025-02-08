@@ -2,8 +2,6 @@
   {
     "listing": "/blog.html",
     "items": [
-      "/posts/rope-notes.html",
-      "/posts/swarms-business-agent.html",
       "/posts/fswatch.html"
     ]
   }
