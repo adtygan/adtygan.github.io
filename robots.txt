@@ -1,1 +1,1 @@
-Sitemap: https://adtygan.github.io/sitemap.xml
+Sitemap: https://sayak.dev/sitemap.xml
